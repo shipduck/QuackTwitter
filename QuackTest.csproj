@@ -126,6 +126,24 @@
     <Compile Include="QuackTwitter\Constants.cs" />
     <Compile Include="QuackTwitter\Tokens.cs" />
     <Compile Include="QuackTwitter\Twitter.cs" />
+    <Compile Include="QuackTwitter\Twitter\Account.cs" />
+    <Compile Include="QuackTwitter\Twitter\Application.cs" />
+    <Compile Include="QuackTwitter\Twitter\Blocks.cs" />
+    <Compile Include="QuackTwitter\Twitter\DirectMessages.cs" />
+    <Compile Include="QuackTwitter\Twitter\Favorites.cs" />
+    <Compile Include="QuackTwitter\Twitter\Followers.cs" />
+    <Compile Include="QuackTwitter\Twitter\Friends.cs" />
+    <Compile Include="QuackTwitter\Twitter\Friendships.cs" />
+    <Compile Include="QuackTwitter\Twitter\Geo.cs" />
+    <Compile Include="QuackTwitter\Twitter\Help.cs" />
+    <Compile Include="QuackTwitter\Twitter\Lists.cs" />
+    <Compile Include="QuackTwitter\Twitter\Media.cs" />
+    <Compile Include="QuackTwitter\Twitter\Mutes.cs" />
+    <Compile Include="QuackTwitter\Twitter\SavedSearches.cs" />
+    <Compile Include="QuackTwitter\Twitter\Search.cs" />
+    <Compile Include="QuackTwitter\Twitter\Statuses.cs" />
+    <Compile Include="QuackTwitter\Twitter\Trends.cs" />
+    <Compile Include="QuackTwitter\Twitter\Users.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
