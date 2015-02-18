@@ -30,14 +30,14 @@ namespace QuackTwitter
 		public dynamic Get(String url, Dictionary<String, String> parameters)
 		{
 			var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.GetRequest), Tokens.AccessToken, parameters);
-			var response = consumer.Channel.WebRequestHandler.GetResponse(request);
+			var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
 			return ParseJson(response);
 		}
 
 		public dynamic Post(String url, Dictionary<String, String> parameters)
 		{
 			var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.PostRequest), Tokens.AccessToken, parameters);
-			var response = consumer.Channel.WebRequestHandler.GetResponse(request);
+			var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
 			return ParseJson(response);
 		}
 
