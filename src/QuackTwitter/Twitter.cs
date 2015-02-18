@@ -10,9 +10,16 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	public partial class Twitter
+	public partial class QuackTwitter
 	{
 		private DesktopConsumer consumer;
+
+		public QuackTwitter()
+		{
+			Statuses = new QuackTwitter.TwitterStatuses(this);
+		}
+
+		public ITwitterStatuses Statuses { get; private set; }
 
 		public void Authenticate()
 		{

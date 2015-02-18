@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class Twitter
+	partial class QuackTwitter
 	{
 		public enum DirectMessages
 		{
