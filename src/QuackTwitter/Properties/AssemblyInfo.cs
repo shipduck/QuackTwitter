@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("QuackTest")]
+[assembly: AssemblyTitle("QuackTwitter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("QuackTest")]
+[assembly: AssemblyProduct("QuackTwitter")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c7476ef1-e010-4583-9bb8-7f9ca316b46b")]
+[assembly: Guid("4e42ad18-ebba-4d88-8e38-8b194ce949dc")]
 
 // Version information for an assembly consists of the following four values:
 //

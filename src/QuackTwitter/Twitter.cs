@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class Twitter
+	public partial class Twitter
 	{
 		private DesktopConsumer consumer;
 
