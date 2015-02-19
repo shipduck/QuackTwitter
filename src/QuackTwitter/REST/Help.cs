@@ -21,13 +21,13 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case Help.Configuration:
-					return Get(Constants.HelpUrl + "/configuration.json", parameters);
+					return Get(Constants.HelpURL + "/configuration.json", parameters);
 				case Help.Languages:
-					return Get(Constants.HelpUrl + "/languages.json", parameters);
+					return Get(Constants.HelpURL + "/languages.json", parameters);
 				case Help.Privacy:
-					return Get(Constants.HelpUrl + "/privacy.json", parameters);
+					return Get(Constants.HelpURL + "/privacy.json", parameters);
 				case Help.Tos:
-					return Get(Constants.HelpUrl + "/tos.json", parameters);
+					return Get(Constants.HelpURL + "/tos.json", parameters);
 				default:
 					throw new Exception();
 			}

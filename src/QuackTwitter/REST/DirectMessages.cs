@@ -22,22 +22,22 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case DirectMessages.Sent:
-					return Get(Constants.DirectMessagesUrl + "/sent.json", parameters);
+					return Get(Constants.DirectMessagesURL + "/sent.json", parameters);
 				case DirectMessages.Show:
 					if (parameters.ContainsKey("id"))
 					{
-						return Get(Constants.DirectMessagesUrl + "/show.json", parameters);
+						return Get(Constants.DirectMessagesURL + "/show.json", parameters);
 					}
 					else
 					{
 						throw new Exception();
 					}
 				case DirectMessages.List:
-					return Get(Constants.DirectMessagesUrl + ".json", parameters);
+					return Get(Constants.DirectMessagesURL + ".json", parameters);
 				case DirectMessages.Destroy:
 					if (parameters.ContainsKey("id"))
 					{
-						return Post(Constants.DirectMessagesUrl + "/destory.json", parameters);
+						return Post(Constants.DirectMessagesURL + "/destory.json", parameters);
 					}
 					else
 					{
@@ -46,7 +46,7 @@ namespace QuackTwitter
 				case DirectMessages.New:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Post(Constants.DirectMessagesUrl + "/new.json", parameters);
+						return Post(Constants.DirectMessagesURL + "/new.json", parameters);
 					}
 					else
 					{

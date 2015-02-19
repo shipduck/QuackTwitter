@@ -18,7 +18,7 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case Application.RateLimitStatus:
-					return Get(Constants.ApplicationUrl + "/rate_limit_status.json", parameters);
+					return Get(Constants.ApplicationURL + "/rate_limit_status.json", parameters);
 				default:
 					throw new Exception();
 			}

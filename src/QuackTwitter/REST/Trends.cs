@@ -22,18 +22,18 @@ namespace QuackTwitter
 				case Trends.Place:
 					if (parameters.ContainsKey("id"))
 					{
-						return Get(Constants.TrendsUrl + "/place.json", parameters);
+						return Get(Constants.TrendsURL + "/place.json", parameters);
 					}
 					else
 					{
 						throw new Exception();
 					}
 				case Trends.Available:
-					return Get(Constants.TrendsUrl + "/available.json", parameters);
+					return Get(Constants.TrendsURL + "/available.json", parameters);
 				case Trends.Closest:
 					if (parameters.ContainsKey("lat") && parameters.ContainsKey("long"))
 					{
-						return Get(Constants.TrendsUrl + "/closest.json", parameters);
+						return Get(Constants.TrendsURL + "/closest.json", parameters);
 					}
 					else
 					{

@@ -25,7 +25,7 @@ namespace QuackTwitter
 		{
 			var serviceProviderDescription = new ServiceProviderDescription
 			{
-				UserAuthorizationEndpoint = new MessageReceivingEndpoint(Constants.OAuthUrl, HttpDeliveryMethods.GetRequest),
+				UserAuthorizationEndpoint = new MessageReceivingEndpoint(Constants.OAuthURL, HttpDeliveryMethods.GetRequest),
 				TamperProtectionElements = new ITamperProtectionChannelBindingElement[] { new HmacSha1SigningBindingElement() },
 				ProtocolVersion = ProtocolVersion.V10a,
 			};
@@ -34,26 +34,26 @@ namespace QuackTwitter
 			consumer = new DesktopConsumer(serviceProviderDescription, tokenManager);
 		}
 
-		public dynamic Get(String url, Dictionary<String, String> parameters)
+		public string Get(String url, Dictionary<String, String> parameters)
 		{
+			if (parameters == null)
+			{
+				parameters = new Dictionary<string, string>();
+			}
 			var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.GetRequest), Tokens.AccessToken, parameters);
 			var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
-			return ParseJson(response);
+			return response.GetResponseReader().ReadToEnd();
 		}
 
-		public dynamic Post(String url, Dictionary<String, String> parameters)
+		public string Post(String url, Dictionary<String, String> parameters)
 		{
+			if (parameters == null)
+			{
+				parameters = new Dictionary<string, string>();
+			}
 			var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.PostRequest), Tokens.AccessToken, parameters);
 			var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
-			return ParseJson(response);
-		}
-
-		private static dynamic ParseJson(IncomingWebResponse response)
-		{
-			using (var stream = response.GetResponseReader())
-			{
-				return JValue.Parse(stream.ReadToEnd());
-			}
+			return response.GetResponseReader().ReadToEnd();
 		}
 	}
 

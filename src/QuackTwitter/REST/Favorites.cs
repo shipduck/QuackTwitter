@@ -20,11 +20,11 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case Favorites.List:
-					return Get(Constants.FavoritesUrl + "list.json", parameters);
+					return Get(Constants.FavoritesURL + "list.json", parameters);
 				case Favorites.Destroy:
 					if (parameters.ContainsKey("id"))
 					{
-						return Post(Constants.FavoritesUrl + "destroy.json", parameters);
+						return Post(Constants.FavoritesURL + "destroy.json", parameters);
 					}
 					else
 					{
@@ -33,7 +33,7 @@ namespace QuackTwitter
 				case Favorites.Create:
 					if (parameters.ContainsKey("id"))
 					{
-						return Post(Constants.FavoritesUrl + "create.json", parameters);
+						return Post(Constants.FavoritesURL + "create.json", parameters);
 					}
 					else
 					{

@@ -120,6 +120,8 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Twitter\Entities.cs" />
+    <Compile Include="Twitter\ICursor.cs" />
+    <Compile Include="Twitter\Ids.cs" />
     <Compile Include="Twitter\Place.cs" />
     <Compile Include="Twitter\Status.cs" />
     <Compile Include="Tokens.cs" />

@@ -22,7 +22,7 @@ namespace QuackTwitter
 				case Geo.Id:
 					if (parameters.ContainsKey("place_id"))
 					{
-						return Get(Constants.GeoUrl + "/id/" + parameters["place_id"] + ".json", parameters);
+						return Get(Constants.GeoURL + "/id/" + parameters["place_id"] + ".json", parameters);
 					}
 					else
 					{
@@ -31,7 +31,7 @@ namespace QuackTwitter
 				case Geo.ReverseGeocode:
 					if (parameters.ContainsKey("lat") && parameters.ContainsKey("long"))
 					{
-						return Get(Constants.GeoUrl + "/reverse_geocode.json", parameters);
+						return Get(Constants.GeoURL + "/reverse_geocode.json", parameters);
 					}
 					else
 					{
@@ -42,7 +42,7 @@ namespace QuackTwitter
 						|| parameters.ContainsKey("ip")
 						|| parameters.ContainsKey("query"))
 					{
-						return Get(Constants.GeoUrl + "/search.json", parameters);
+						return Get(Constants.GeoURL + "/search.json", parameters);
 					}
 					else
 					{

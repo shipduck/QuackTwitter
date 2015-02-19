@@ -21,13 +21,13 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case Blocks.List:
-					return Get(Constants.BlocksUrl + "list.json", parameters);
+					return Get(Constants.BlocksURL + "list.json", parameters);
 				case Blocks.Ids:
-					return Get(Constants.BlocksUrl + "ids.json", parameters);
+					return Get(Constants.BlocksURL + "ids.json", parameters);
 				case Blocks.Create:
 					if (parameters.ContainsKey("screen_name") || parameters.ContainsKey("user_id"))
 					{
-						return Post(Constants.BlocksUrl + "create.json", parameters);
+						return Post(Constants.BlocksURL + "create.json", parameters);
 					}
 					else
 					{
@@ -36,7 +36,7 @@ namespace QuackTwitter
 				case Blocks.Destroy:
 					if (parameters.ContainsKey("screen_name") || parameters.ContainsKey("user_id"))
 					{
-						return Post(Constants.BlocksUrl + "destroy.json", parameters);
+						return Post(Constants.BlocksURL + "destroy.json", parameters);
 					}
 					else
 					{

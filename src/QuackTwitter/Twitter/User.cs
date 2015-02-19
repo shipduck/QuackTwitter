@@ -88,7 +88,7 @@ namespace QuackTwitter
 		public bool DefaultProfile { get; private set; }
 		[JsonProperty("default_profile_image")]
 		public bool DefaultProfileImage { get; private set; }
-		[JsonProperty("following")]
+		[JsonProperty("following", NullValueHandling = NullValueHandling.Ignore)]
 		public bool Following { get; private set; }
 		[JsonProperty("follow_request_sent")]
 		public bool FollowRequestSent { get; private set; }

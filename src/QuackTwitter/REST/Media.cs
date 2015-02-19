@@ -20,7 +20,7 @@ namespace QuackTwitter
 				case Media.Upload:
 					if (parameters.ContainsKey("media"))
 					{
-						return Post(Constants.MediaUrl + "/upload.json", parameters);
+						return Post(Constants.MediaURL + "/upload.json", parameters);
 					}
 					else
 					{

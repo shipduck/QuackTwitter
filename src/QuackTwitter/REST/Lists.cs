@@ -36,14 +36,14 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case Lists.List:
-					return Get(Constants.ListsUrl + "/list.json", parameters);
+					return Get(Constants.ListsURL + "/list.json", parameters);
 				case Lists.Statuses:
 					if (parameters.ContainsKey("list_id")
 						|| (parameters.ContainsKey("slug")
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/statuses.json", parameters);
+						return Get(Constants.ListsURL + "/statuses.json", parameters);
 					}
 					else
 					{
@@ -55,7 +55,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Post(Constants.ListsUrl + "/members/destroy.json", parameters);
+						return Post(Constants.ListsURL + "/members/destroy.json", parameters);
 					}
 					else
 					{
@@ -64,7 +64,7 @@ namespace QuackTwitter
 				case Lists.Memberships:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.ListsUrl + "/memberships.json", parameters);
+						return Get(Constants.ListsURL + "/memberships.json", parameters);
 					}
 					else
 					{
@@ -76,7 +76,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/subscribers.json", parameters);
+						return Get(Constants.ListsURL + "/subscribers.json", parameters);
 					}
 					else
 					{
@@ -88,7 +88,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/subscribers/create.json", parameters);
+						return Get(Constants.ListsURL + "/subscribers/create.json", parameters);
 					}
 					else
 					{
@@ -100,7 +100,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/subscribers/show.json", parameters);
+						return Get(Constants.ListsURL + "/subscribers/show.json", parameters);
 					}
 					else
 					{
@@ -112,7 +112,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/subscribers/destroy.json", parameters);
+						return Get(Constants.ListsURL + "/subscribers/destroy.json", parameters);
 					}
 					else
 					{
@@ -124,7 +124,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/members/create_all.json", parameters);
+						return Get(Constants.ListsURL + "/members/create_all.json", parameters);
 					}
 					else
 					{
@@ -136,7 +136,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/members/show.json", parameters);
+						return Get(Constants.ListsURL + "/members/show.json", parameters);
 					}
 					else
 					{
@@ -148,7 +148,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/members.json", parameters);
+						return Get(Constants.ListsURL + "/members.json", parameters);
 					}
 					else
 					{
@@ -160,7 +160,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/members/create.json", parameters);
+						return Get(Constants.ListsURL + "/members/create.json", parameters);
 					}
 					else
 					{
@@ -172,7 +172,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/destroy.json", parameters);
+						return Get(Constants.ListsURL + "/destroy.json", parameters);
 					}
 					else
 					{
@@ -184,7 +184,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/update.json", parameters);
+						return Get(Constants.ListsURL + "/update.json", parameters);
 					}
 					else
 					{
@@ -193,7 +193,7 @@ namespace QuackTwitter
 				case Lists.Create:
 					if (parameters.ContainsKey("name"))
 					{
-						return Post(Constants.ListsUrl + "/create.json", parameters);
+						return Post(Constants.ListsURL + "/create.json", parameters);
 					}
 					else
 					{
@@ -205,7 +205,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/show.json", parameters);
+						return Get(Constants.ListsURL + "/show.json", parameters);
 					}
 					else
 					{
@@ -214,7 +214,7 @@ namespace QuackTwitter
 				case Lists.Subscriptions:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.ListsUrl + "/subscriptions.json", parameters);
+						return Get(Constants.ListsURL + "/subscriptions.json", parameters);
 					}
 					else
 					{
@@ -226,7 +226,7 @@ namespace QuackTwitter
 							&& (parameters.ContainsKey("owner_screen_name")
 								|| parameters.ContainsKey("owner_id"))))
 					{
-						return Get(Constants.ListsUrl + "/members/destroy_all.json", parameters);
+						return Get(Constants.ListsURL + "/members/destroy_all.json", parameters);
 					}
 					else
 					{
@@ -235,7 +235,7 @@ namespace QuackTwitter
 				case Lists.Ownerships:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.ListsUrl + "/ownerships.json", parameters);
+						return Get(Constants.ListsURL + "/ownerships.json", parameters);
 					}
 					else
 					{

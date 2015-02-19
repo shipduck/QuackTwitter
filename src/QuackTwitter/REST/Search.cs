@@ -20,7 +20,7 @@ namespace QuackTwitter
 				case Search.Tweets:
 					if (parameters.ContainsKey("q"))
 					{
-						return Get(Constants.SearchUrl + "/tweets.json", parameters);
+						return Get(Constants.SearchURL + "/tweets.json", parameters);
 					}
 					else
 					{

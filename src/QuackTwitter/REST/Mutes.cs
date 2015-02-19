@@ -24,7 +24,7 @@ namespace QuackTwitter
 					if (parameters.ContainsKey("screen_name")
 						|| parameters.ContainsKey("user_id"))
 					{
-						return Post(Constants.MutesUrl + "/users/create.json", parameters);
+						return Post(Constants.MutesURL + "/users/create.json", parameters);
 					}
 					else
 					{
@@ -34,16 +34,16 @@ namespace QuackTwitter
 					if (parameters.ContainsKey("screen_name")
 						|| parameters.ContainsKey("usre_id"))
 					{
-						return Post(Constants.MutesUrl + "/users/destroy.json", parameters);
+						return Post(Constants.MutesURL + "/users/destroy.json", parameters);
 					}
 					else
 					{
 						throw new Exception();
 					}
 				case Mutes.UsersIds:
-					return Get(Constants.MutesUrl + "users/ids.json", parameters);
+					return Get(Constants.MutesURL + "users/ids.json", parameters);
 				case Mutes.UsersList:
-					return Get(Constants.MutesUrl + "usres/list.json", parameters);
+					return Get(Constants.MutesURL + "usres/list.json", parameters);
 				default:
 					throw new Exception();
 			}

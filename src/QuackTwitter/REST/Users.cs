@@ -25,11 +25,11 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case Users.Lookup:
-					return Get(Constants.UsersUrl + "lookup.json", parameters);
+					return Get(Constants.UsersURL + "lookup.json", parameters);
 				case Users.Show:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.UsersUrl + "show.json", parameters);
+						return Get(Constants.UsersURL + "show.json", parameters);
 					}
 					else
 					{
@@ -38,7 +38,7 @@ namespace QuackTwitter
 				case Users.Search:
 					if (parameters.ContainsKey("q"))
 					{
-						return Get(Constants.UsersUrl + "search.json", parameters);
+						return Get(Constants.UsersURL + "search.json", parameters);
 					}
 					else
 					{
@@ -48,7 +48,7 @@ namespace QuackTwitter
 					if (parameters.ContainsKey("user_id")
 						|| parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.UsersUrl + "profile_banner.json", parameters);
+						return Get(Constants.UsersURL + "profile_banner.json", parameters);
 					}
 					else
 					{
@@ -57,18 +57,18 @@ namespace QuackTwitter
 				case Users.SuggestionsSlug:
 					if (parameters.ContainsKey("slug"))
 					{
-						return Get(Constants.UsersUrl + "suggestions/" + parameters["slug"] + ".json", parameters);
+						return Get(Constants.UsersURL + "suggestions/" + parameters["slug"] + ".json", parameters);
 					}
 					else
 					{
 						throw new Exception();
 					}
 				case Users.Suggestions:
-					return Get(Constants.UsersUrl + "suggestions.json", parameters);
+					return Get(Constants.UsersURL + "suggestions.json", parameters);
 				case Users.SuggestionsSlugMembers:
-					return Get(Constants.UsersUrl + "suggestions/" + parameters["slug"] + "/members.json", parameters);
+					return Get(Constants.UsersURL + "suggestions/" + parameters["slug"] + "/members.json", parameters);
 				case Users.ReportSpam:
-					return Post(Constants.UsersUrl + "report_spam.json", parameters);
+					return Post(Constants.UsersURL + "report_spam.json", parameters);
 				default:
 					throw new Exception();
 			}

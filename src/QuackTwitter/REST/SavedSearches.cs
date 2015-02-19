@@ -21,11 +21,11 @@ namespace QuackTwitter
 			switch (type)
 			{
 				case SavedSearches.List:
-					return Get(Constants.SavedSearchesUrl + "/list.json", parameters);
+					return Get(Constants.SavedSearchesURL + "/list.json", parameters);
 				case SavedSearches.Show:
 					if (parameters.ContainsKey("id"))
 					{
-						return Get(Constants.SavedSearchesUrl + "/show/" + parameters["id"] + ".json", parameters);
+						return Get(Constants.SavedSearchesURL + "/show/" + parameters["id"] + ".json", parameters);
 					}
 					else
 					{
@@ -34,7 +34,7 @@ namespace QuackTwitter
 				case SavedSearches.Create:
 					if (parameters.ContainsKey("query"))
 					{
-						return Post(Constants.SavedSearchesUrl + "/create.json", parameters);
+						return Post(Constants.SavedSearchesURL + "/create.json", parameters);
 					}
 					else
 					{
@@ -43,7 +43,7 @@ namespace QuackTwitter
 				case SavedSearches.Destroy:
 					if (parameters.ContainsKey("id"))
 					{
-						return Post(Constants.SavedSearchesUrl + "/destroy/" + parameters["id"] + ".json", parameters);
+						return Post(Constants.SavedSearchesURL + "/destroy/" + parameters["id"] + ".json", parameters);
 					}
 					else
 					{

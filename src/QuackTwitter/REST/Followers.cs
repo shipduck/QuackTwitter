@@ -21,7 +21,7 @@ namespace QuackTwitter
 				case Followers.Ids:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.FollowersUrl + "/ids.json", parameters);
+						return Get(Constants.FollowersURL + "/ids.json", parameters);
 					}
 					else
 					{

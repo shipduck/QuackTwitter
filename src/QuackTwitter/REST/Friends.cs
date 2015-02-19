@@ -21,7 +21,7 @@ namespace QuackTwitter
 				case Friends.Ids:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.FriendsUrl + "/ids.json", parameters);
+						return Get(Constants.FriendsURL + "/ids.json", parameters);
 					}
 					else
 					{
@@ -30,7 +30,7 @@ namespace QuackTwitter
 				case Friends.List:
 					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
 					{
-						return Get(Constants.FriendsUrl + "/list.json", parameters);
+						return Get(Constants.FriendsURL + "/list.json", parameters);
 					}
 					else
 					{
