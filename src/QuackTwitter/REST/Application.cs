@@ -9,18 +9,9 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public class TwitterApplication
+		public TwitterRateLimitStatus ApplicationRateLimitStatus(Dictionary<string, string> parameters = null)
 		{
-			private Twitter instance;
-			public TwitterApplication(Twitter instance)
-			{
-				this.instance = instance;
-			}
-
-			public TwitterRateLimitStatus RateLimitStatus(Dictionary<string, string> parameters)
-			{
-				return JsonConvert.DeserializeObject<TwitterRateLimitStatus>(instance.Get(Constants.ApplicationURL + "/rate_limit_status.json", parameters));
-			}
+			return JsonConvert.DeserializeObject<TwitterRateLimitStatus>(GET(Constants.ApplicationURL + "/rate_limit_status.json", parameters));
 		}
 	}
 }

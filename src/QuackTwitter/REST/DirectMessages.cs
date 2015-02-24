@@ -9,51 +9,42 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public class TwitterDirectMessages
+		public IList<TwitterDirectMessage> DirectMessagesSent(Dictionary<string, string> parameters = null)
 		{
-			private Twitter instance;
-			public TwitterDirectMessages(Twitter instance)
-			{
-				this.instance = instance;
-			}
+			return JsonConvert.DeserializeObject<IList<TwitterDirectMessage>>(GET(Constants.DirectMessagesURL + "/sent.json", parameters));
+		}
 
-			public IList<TwitterDirectMessage> Sent(Dictionary<string, string> parameters = null)
+		public IList<TwitterDirectMessage> DirectMessagesShow(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
 			{
-				return JsonConvert.DeserializeObject<IList<TwitterDirectMessage>>(instance.Get(Constants.DirectMessagesURL + "/sent.json", parameters));
+				return JsonConvert.DeserializeObject<IList<TwitterDirectMessage>>(GET(Constants.DirectMessagesURL + "/show.json", parameters));
 			}
-
-			public TwitterDirectMessage Show(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<IList<TwitterDirectMessage>>(instance.Get(Constants.DirectMessagesURL + "/show.json", parameters))[0];
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public IList<TwitterDirectMessage> List(Dictionary<string, string> parameters = null)
+		public IList<TwitterDirectMessage> DirectMessages(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<IList<TwitterDirectMessage>>(GET(Constants.DirectMessagesURL + ".json", parameters));
+		}
+
+		public TwitterDirectMessage DirectMessagesDestroy(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<TwitterDirectMessage>(POST(Constants.DirectMessagesURL + "/destroy.json", parameters));
+		}
+
+		public TwitterDirectMessage DirectMessagesNew(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("text"))
 			{
-				return JsonConvert.DeserializeObject<IList<TwitterDirectMessage>>(instance.Get(Constants.DirectMessagesURL + ".json", parameters));
+				return JsonConvert.DeserializeObject<TwitterDirectMessage>(POST(Constants.DirectMessagesURL + "/new.json", parameters));
 			}
-
-			public TwitterDirectMessage Destroy(Dictionary<string, string> parameters)
+			else
 			{
-				return JsonConvert.DeserializeObject<TwitterDirectMessage>(instance.Post(Constants.DirectMessagesURL + "/destroy.json", parameters));
-			}
-
-			public TwitterDirectMessage New(Dictionary<string, string> parameters)
-			{
-				if (parameters.ContainsKey("text"))
-				{
-					return JsonConvert.DeserializeObject<TwitterDirectMessage>(instance.Post(Constants.DirectMessagesURL + "/new.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
 		}
 	}

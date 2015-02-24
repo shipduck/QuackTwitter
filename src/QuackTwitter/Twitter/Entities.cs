@@ -86,17 +86,7 @@ namespace QuackTwitter
 			[JsonProperty("type")]
 			public string Type { get; private set; }
 			[JsonProperty("sizes")]
-			public IDictionary<string, TwitterSize> Sizes { get; private set; }
-
-			public class TwitterSize
-			{
-				[JsonProperty("w")]
-				public int W { get; private set; }
-				[JsonProperty("h")]
-				public int H { get; private set; }
-				[JsonProperty("resize")]
-				public string Resize { get; private set; }
-			}
+			public TwitterSizes Sizes { get; private set; }
 		}
 
 		public class TwitterDescription

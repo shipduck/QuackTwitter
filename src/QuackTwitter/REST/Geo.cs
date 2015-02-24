@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,48 +9,41 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public enum Geo
+		public TwitterPlace GeoIdPlaceId(Dictionary<string, string> parameters)
 		{
-			Id,
-			ReverseGeocode,
-			Search
-		};
-
-		public dynamic REST(Geo type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			if (parameters.ContainsKey("place_id"))
 			{
-				case Geo.Id:
-					if (parameters.ContainsKey("place_id"))
-					{
-						return Get(Constants.GeoURL + "/id/" + parameters["place_id"] + ".json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Geo.ReverseGeocode:
-					if (parameters.ContainsKey("lat") && parameters.ContainsKey("long"))
-					{
-						return Get(Constants.GeoURL + "/reverse_geocode.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Geo.Search:
-					if ((parameters.ContainsKey("lat") && parameters.ContainsKey("long"))
-						|| parameters.ContainsKey("ip")
-						|| parameters.ContainsKey("query"))
-					{
-						return Get(Constants.GeoURL + "/search.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
-					throw new Exception();
+				return JsonConvert.DeserializeObject<TwitterPlace>(GET(Constants.GeoURL + "/id/" + parameters["place_id"] + ".json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterGeo GeoReverseGeocode(Dictionary<string, string> parameters)
+		{
+			if(parameters.ContainsKey("lat")
+				&& parameters.ContainsKey("long"))
+			{
+				return JsonConvert.DeserializeObject<TwitterGeo>(GET(Constants.GeoURL + "/reverse_geocode.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterGeo GeoSearch(Dictionary<string, string> parameters)
+		{
+			if((parameters.ContainsKey("lat") && parameters.ContainsKey("long"))
+				|| parameters.ContainsKey("query")
+				|| parameters.ContainsKey("ip")) {
+					return JsonConvert.DeserializeObject<TwitterGeo>(GET(Constants.GeoURL + "/search.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}

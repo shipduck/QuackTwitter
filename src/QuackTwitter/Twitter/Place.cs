@@ -25,12 +25,18 @@ namespace QuackTwitter
 		public string Country { get; private set; }
 		[JsonProperty("contained_within")]
 		public IList<TwitterPlace> ContainedWithin { get; private set; }
+		[JsonProperty("geometry")]
+		public TwitterCoordinates Geometry { get; private set; }
+		[JsonProperty("polylines")]
+		public IList<string> Polylines { get; private set; }
+		[JsonProperty("centroid")]
+		public IList<float> Centroid { get; private set; }
 		[JsonProperty("bounding_box")]
-		public TwitterBoundingBox BoundingBox { get; private set; }
+		public TwitterCoordinates BoundingBox { get; private set; }
 		[JsonProperty("attributes")]
 		public TwitterAttributes Attributes { get; private set; }
 
-		public class TwitterBoundingBox
+		public class TwitterCoordinates
 		{
 			[JsonProperty("type")]
 			public string Type { get; private set; }

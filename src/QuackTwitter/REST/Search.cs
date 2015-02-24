@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +9,15 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public enum Search
+		public TwitterSearch SearchTweets(Dictionary<string, string> parameters)
 		{
-			Tweets
-		};
-
-		public dynamic REST(Search type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			if (parameters.ContainsKey("q"))
 			{
-				case Search.Tweets:
-					if (parameters.ContainsKey("q"))
-					{
-						return Get(Constants.SearchURL + "/tweets.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
-					throw new Exception();
+				return JsonConvert.DeserializeObject<TwitterSearch>(GET(Constants.SearchURL + "/tweets.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}

@@ -9,49 +9,40 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public class TwitterMutes
+		public TwitterUser MutesUsersCreate(Dictionary<string, string> parameters)
 		{
-			private Twitter instance;
-			public TwitterMutes(Twitter instance)
+			if (parameters.ContainsKey("screen_name")
+				|| parameters.ContainsKey("user_id"))
 			{
-				this.instance = instance;
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.MutesURL + "/users/create.json", parameters));
 			}
+			else
+			{
+				throw new Exception();
+			}
+		}
 
-			public TwitterUser UsersCreate(Dictionary<string, string> parameters)
+		public TwitterUser MutesUsersDestroy(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("screen_name")
+				|| parameters.ContainsKey("user_id"))
 			{
-				if (parameters.ContainsKey("screen_name")
-					|| parameters.ContainsKey("user_id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterUser>(instance.Post(Constants.MutesURL + "/users/create.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.MutesURL + "/users/destroy.json", parameters));
 			}
+			else
+			{
+				throw new Exception();
+			}
+		}
 
-			public TwitterUser UsersDestroy(Dictionary<string, string> parameters)
-			{
-				if (parameters.ContainsKey("screen_name")
-					|| parameters.ContainsKey("user_id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterUser>(instance.Post(Constants.MutesURL + "/users/destroy.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
-			}
+		public TwitterUserIds MutesUsersIds(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<TwitterUserIds>(GET(Constants.MutesURL + "/users/ids.json", parameters));
+		}
 
-			public TwitterUserIds UsersIds(Dictionary<string, string> parameters)
-			{
-				return JsonConvert.DeserializeObject<TwitterUserIds>(instance.Get(Constants.MutesURL + "/users/ids.json", parameters));
-			}
-
-			public TwitterUserList UsersList(Dictionary<string, string> parameters)
-			{
-				return JsonConvert.DeserializeObject<TwitterUserList>(instance.Get(Constants.MutesURL + "/users/list.json", parameters));
-			}
+		public TwitterUsers MutesUsersList(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<TwitterUsers>(GET(Constants.MutesURL + "/users/list.json", parameters));
 		}
 	}
 }

@@ -9,64 +9,97 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public interface ITwitterUsers
+		public IList<TwitterUser> UsersLookup(Dictionary<string, string> parameters)
 		{
-			IList<TwitterUser> Lookup(Dictionary<string, string> parameters);
-			TwitterUser Show(Dictionary<string, string> parameters);
-			IList<TwitterUser> Search(Dictionary<string, string> parameters);
-//			Dictionary<string, Size> ProfileBanner(Dictionary<string, string> paramters);
-//			void SuggestionsSlug();
-//			void Suggestions();
-//			void SuggestionsSlugMemebers();
+			if (parameters.ContainsKey("screen_name")
+				|| parameters.ContainsKey("user_id"))
+			{
+				return JsonConvert.DeserializeObject<IList<TwitterUser>>(GET(Constants.UsersURL + "/lookup.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
 		}
 
-		private class TwitterUsers : ITwitterUsers
+		public TwitterUser UsersShow(Dictionary<string, string> parameters)
 		{
-			private Twitter instance;
-			public TwitterUsers(Twitter instance)
+			if (parameters.ContainsKey("user_id")
+				|| parameters.ContainsKey("screen_name"))
 			{
-				this.instance = instance;
+				return JsonConvert.DeserializeObject<TwitterUser>(GET(Constants.UsersURL + "/show.json", parameters));
 			}
-
-			public IList<TwitterUser> Lookup(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("screen_name")
-					|| parameters.ContainsKey("user_id"))
-				{
-					return JsonConvert.DeserializeObject<IList<TwitterUser>>(instance.Get(Constants.UsersURL + "/lookup.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public TwitterUser Show(Dictionary<string, string> parameters)
+		public IList<TwitterUser> UsersSearch(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("q"))
 			{
-				if (parameters.ContainsKey("user_id")
-					|| parameters.ContainsKey("screen_name"))
-				{
-					return JsonConvert.DeserializeObject<TwitterUser>(instance.Get(Constants.UsersURL + "/show.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<IList<TwitterUser>>(GET(Constants.UsersURL + "/search.json", parameters));
 			}
-
-			public IList<TwitterUser> Search(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("q"))
-				{
-					return JsonConvert.DeserializeObject<IList<TwitterUser>>(instance.Get(Constants.UsersURL + "/search.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-//			public Dictionary<string, Size> ProfileBanner(Dictionary<string, string> paramters) {}
+		public TwitterBannerSizes UsersProfileBanner(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("user_id")
+				|| parameters.ContainsKey("screen_name"))
+			{
+				return JsonConvert.DeserializeObject<TwitterBannerSizes>(GET(Constants.UsersURL + "/profile_banner.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterSlug UsersSuggestionsSlug(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("slug"))
+			{
+				return JsonConvert.DeserializeObject<TwitterSlug>(GET(Constants.UsersURL + "/suggestions/" + parameters["slug"] + ".json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public IList<TwitterSlug> UsersSuggestions(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<IList<TwitterSlug>>(GET(Constants.UsersURL + "/suggestions.json", parameters));
+		}
+
+		public IList<TwitterUser> UsersSuggestionsSlugMembers(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("slug"))
+			{
+				return JsonConvert.DeserializeObject<IList<TwitterUser>>(GET(Constants.UsersURL + "/suggestions/" + parameters["slug"] + "/members.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterUser UsersReportSpam(Dictionary<string, string> parameters)
+		{
+			if(parameters.ContainsKey("screen_name")
+				|| parameters.ContainsKey("user_id"))
+			{
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.UsersURL + "/report_spam.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
 		}
 	}
 }

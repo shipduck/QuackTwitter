@@ -9,38 +9,29 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public class TwitterFollowers
+		public TwitterUserIds FollowersIds(Dictionary<string, string> parameters)
 		{
-			private Twitter instance;
-			public TwitterFollowers(Twitter instance)
+			if (parameters.ContainsKey("user_id")
+				|| parameters.ContainsKey("screen_name"))
 			{
-				this.instance = instance;
+				return JsonConvert.DeserializeObject<TwitterUserIds>(GET(Constants.FollowersURL + "/ids.json", parameters));
 			}
-
-			public TwitterUserIds Ids(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("user_id")
-					|| parameters.ContainsKey("screen_name"))
-				{
-					return JsonConvert.DeserializeObject<TwitterUserIds>(instance.Get(Constants.FollowersURL + "/ids.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public TwitterUserList List(Dictionary<string, string> parameters)
+		public TwitterUsers FollowersList(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("user_id")
+				|| parameters.ContainsKey("screen_name"))
 			{
-				if (parameters.ContainsKey("user_id")
-					|| parameters.ContainsKey("screen_name"))
-				{
-					return JsonConvert.DeserializeObject<TwitterUserList>(instance.Get(Constants.FollowersURL + "/list.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterUsers>(GET(Constants.FollowersURL + "/list.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}

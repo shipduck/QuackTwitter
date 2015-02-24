@@ -14,13 +14,6 @@ namespace QuackTwitter
 	{
 		private DesktopConsumer consumer;
 
-		public Twitter()
-		{
-			Statuses = new TwitterStatuses(this);
-		}
-
-		public TwitterStatuses Statuses;
-
 		public void Authenticate()
 		{
 			var serviceProviderDescription = new ServiceProviderDescription
@@ -34,7 +27,7 @@ namespace QuackTwitter
 			consumer = new DesktopConsumer(serviceProviderDescription, tokenManager);
 		}
 
-		public string Get(String url, Dictionary<String, String> parameters)
+		public string GET(String url, Dictionary<String, String> parameters)
 		{
 			if (parameters == null)
 			{
@@ -45,7 +38,7 @@ namespace QuackTwitter
 			return response.GetResponseReader().ReadToEnd();
 		}
 
-		public string Post(String url, Dictionary<String, String> parameters)
+		public string POST(String url, Dictionary<String, String> parameters)
 		{
 			if (parameters == null)
 			{

@@ -16,8 +16,8 @@ namespace QuackTest
 			twitter.Authenticate();
 
 			var parameters = new Dictionary<String, String>();
-			parameters.Add("count", "2");
-			var json = twitter.Statuses.UserTimeline();
+			parameters.Add("count", "3");
+			var json = twitter.StatusesUserTimeline(parameters);
 			foreach (var tweet in json)
 			{
 				Console.WriteLine(tweet.Text);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,49 +9,44 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public enum SavedSearches
+		public IList<TwitterSavedSearch> SavedSearchesList(Dictionary<string, string> parameters = null)
 		{
-			List,
-			Show,
-			Create,
-			Destroy
-		};
+			return JsonConvert.DeserializeObject<IList<TwitterSavedSearch>>(GET(Constants.SavedSearchesURL + "/list.json", parameters));
+		}
 
-		public dynamic REST(SavedSearches type, Dictionary<String, String> parameters)
+		public TwitterSavedSearch SavedSearchesShowId(Dictionary<string, string> parameters)
 		{
-			switch (type)
+			if (parameters.ContainsKey("id"))
 			{
-				case SavedSearches.List:
-					return Get(Constants.SavedSearchesURL + "/list.json", parameters);
-				case SavedSearches.Show:
-					if (parameters.ContainsKey("id"))
-					{
-						return Get(Constants.SavedSearchesURL + "/show/" + parameters["id"] + ".json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case SavedSearches.Create:
-					if (parameters.ContainsKey("query"))
-					{
-						return Post(Constants.SavedSearchesURL + "/create.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case SavedSearches.Destroy:
-					if (parameters.ContainsKey("id"))
-					{
-						return Post(Constants.SavedSearchesURL + "/destroy/" + parameters["id"] + ".json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
-					throw new Exception();
+				return JsonConvert.DeserializeObject<TwitterSavedSearch>(GET(Constants.SavedSearchesURL + "/show/" + parameters["id"] + ".json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterSavedSearch SavedSearchesCreate(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("query"))
+			{
+				return JsonConvert.DeserializeObject<TwitterSavedSearch>(POST(Constants.SavedSearchesURL + "/create.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterSavedSearch SavedSearchesDestroyId(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
+			{
+				return JsonConvert.DeserializeObject<TwitterSavedSearch>(POST(Constants.SavedSearchesURL + "/destroy/" + parameters["id"] + ".json", parameters));
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}

@@ -119,12 +119,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Twitter\Configuration.cs" />
     <Compile Include="Twitter\FriendshipUser.cs" />
+    <Compile Include="Twitter\Geo.cs" />
+    <Compile Include="Twitter\Language.cs" />
+    <Compile Include="Twitter\List.cs" />
+    <Compile Include="Twitter\Lists.cs" />
+    <Compile Include="Twitter\Media.cs" />
+    <Compile Include="Twitter\Privacy.cs" />
     <Compile Include="Twitter\Relationship.cs" />
     <Compile Include="Twitter\RelationshipUser.cs" />
     <Compile Include="Twitter\DirectMessage.cs" />
     <Compile Include="Twitter\Entities.cs" />
     <Compile Include="Twitter\RateLimitStatus.cs" />
+    <Compile Include="Twitter\SavedSearch.cs" />
+    <Compile Include="Twitter\Search.cs" />
+    <Compile Include="Twitter\BannerSizes.cs" />
+    <Compile Include="Twitter\Slug.cs" />
+    <Compile Include="Twitter\TOS.cs" />
+    <Compile Include="Twitter\TrendLocation.cs" />
+    <Compile Include="Twitter\Trends.cs" />
     <Compile Include="Twitter\UserIds.cs" />
     <Compile Include="Twitter\Place.cs" />
     <Compile Include="Twitter\Settings.cs" />
@@ -151,10 +165,11 @@
     <Compile Include="REST\Trends.cs" />
     <Compile Include="REST\Users.cs" />
     <Compile Include="Twitter\User.cs" />
-    <Compile Include="Twitter\UserList.cs" />
+    <Compile Include="Twitter\Users.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Twitter\Sizes.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

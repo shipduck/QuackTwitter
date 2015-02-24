@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +9,14 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public enum Media
+		public TwitterMedia MediaUpload(Dictionary<string, string> parameters)
 		{
-			Upload
-		};
-
-		public dynamic REST(Media type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			if (parameters.ContainsKey("media"))
 			{
-				case Media.Upload:
-					if (parameters.ContainsKey("media"))
-					{
-						return Post(Constants.MediaURL + "/upload.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
-					throw new Exception();
+				return JsonConvert.DeserializeObject<TwitterMedia>(POST(Constants.MediaURL + "/upload.json", parameters));
+			}
+			else {
+				throw new Exception();
 			}
 		}
 	}

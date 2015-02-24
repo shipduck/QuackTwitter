@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +9,24 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public enum Help
+		public TwitterConfiguration HelpConfiguration(Dictionary<string, string> parameters = null)
 		{
-			Configuration,
-			Languages,
-			Privacy,
-			Tos
-		};
+			return JsonConvert.DeserializeObject<TwitterConfiguration>(GET(Constants.HelpURL + "/configuration.json", parameters));
+		}
 
-		public dynamic REST(Help type, Dictionary<String, String> parameters)
+		public IList<TwitterLanguage> HelpLanguages(Dictionary<string, string> parameters = null)
 		{
-			switch (type)
-			{
-				case Help.Configuration:
-					return Get(Constants.HelpURL + "/configuration.json", parameters);
-				case Help.Languages:
-					return Get(Constants.HelpURL + "/languages.json", parameters);
-				case Help.Privacy:
-					return Get(Constants.HelpURL + "/privacy.json", parameters);
-				case Help.Tos:
-					return Get(Constants.HelpURL + "/tos.json", parameters);
-				default:
-					throw new Exception();
-			}
+			return JsonConvert.DeserializeObject<IList<TwitterLanguage>>(GET(Constants.HelpURL + "/languages.json", parameters));
+		}
+
+		public TwitterPrivacy HelpPrivacy(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<TwitterPrivacy>(GET(Constants.HelpURL + "/privacy.json", parameters));
+		}
+
+		public TwitterTOS HelpTOS(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<TwitterTOS>(GET(Constants.HelpURL + "/tos.json", parameters));
 		}
 	}
 }

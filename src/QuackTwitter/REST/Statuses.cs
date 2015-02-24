@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,127 +8,118 @@ using System.Threading.Tasks;
 namespace QuackTwitter
 {
 	partial class Twitter {
-		public class TwitterStatuses
+		public IList<TwitterStatus> StatusesMentionsTimeline(Dictionary<string, string> parameters = null)
 		{
-			private Twitter instance;
-			public TwitterStatuses(Twitter instance)
-			{
-				this.instance = instance;
+			return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.StatusesURL + "/mentions_timeline.json", parameters));
+		}
+
+		public IList<TwitterStatus> StatusesUserTimeline(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.StatusesURL + "/user_timeline.json", parameters));
+		}
+
+		public IList<TwitterStatus> StatusesHomeTimeline(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.StatusesURL + "/home_timeline.json", parameters));
+		}
+
+		public IList<TwitterStatus> StatusesRetweetsOfMe(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.StatusesURL + "/retweets_of_me.json", parameters));
+		}
+
+		public IList<TwitterStatus> StatusesRetweets(Dictionary<string, string> parameters = null)
+		{
+			if(parameters.ContainsKey("id")) {
+				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.StatusesURL + "/retweets/" + parameters["id"] + ".json", parameters));
 			}
-
-			public IList<TwitterStatus> MentionsTimeline(Dictionary<string, string> parameters = null)
-			{
-				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.StatusesURL + "/mentions_timeline.json", parameters));
+			else {
+				throw new Exception();
 			}
+		}
 
-			public IList<TwitterStatus> UserTimeline(Dictionary<string, string> parameters = null)
-			{
-				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.StatusesURL + "/user_timeline.json", parameters));
+		public TwitterStatus StatusesShow(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id")) {
+				return JsonConvert.DeserializeObject<TwitterStatus>(GET(Constants.StatusesURL + "/show.json", parameters));
 			}
-
-			public IList<TwitterStatus> HomeTimeline(Dictionary<string, string> parameters = null)
+			else
 			{
-				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.StatusesURL + "/home_timeline.json", parameters));
+				throw new Exception();
 			}
+		}
 
-			public IList<TwitterStatus> RetweetsOfMe(Dictionary<string, string> parameters = null)
+		public TwitterStatus StatusesDestroy(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
 			{
-				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.StatusesURL + "/retweets_of_me.json", parameters));
+				return JsonConvert.DeserializeObject<TwitterStatus>(POST(Constants.StatusesURL + "/destroy/" + parameters["id"] + ".json", parameters));
 			}
-
-			public IList<TwitterStatus> Retweets(Dictionary<string, string> parameters = null)
+			else
 			{
-				if(parameters.ContainsKey("id")) {
-					return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.StatusesURL + "/retweets/" + parameters["id"] + ".json", parameters));
-				}
-				else {
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public TwitterStatus Show(Dictionary<string, string> parameters = null)
+		public TwitterStatus StatusesUpdate(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("status"))
 			{
-				if (parameters.ContainsKey("id")) {
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Get(Constants.StatusesURL + "/show.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterStatus>(POST(Constants.StatusesURL + "/update.json", parameters));
 			}
-
-			public TwitterStatus Destroy(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.StatusesURL + "/destroy/" + parameters["id"] + ".json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public TwitterStatus Update(Dictionary<string, string> parameters)
+		public TwitterStatus StatusesRetweet(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
 			{
-				if (parameters.ContainsKey("status"))
-				{
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.StatusesURL + "/update.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterStatus>(POST(Constants.StatusesURL + "/retweet/" + parameters["id"] + ".json", parameters));
 			}
-
-			public TwitterStatus Retweet(Dictionary<string, string> parameters)
-			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.StatusesURL + "/retweet/" + parameters["id"] + ".json", parameters));
-				}
-				else{
-					throw new Exception();
-				}
+			else{
+				throw new Exception();
 			}
+		}
 
-			public TwitterStatus UpdateWithMedia(Dictionary<string, string> parameters)
+		public TwitterStatus StatusesUpdateWithMedia(Dictionary<string, string> parameters)
+		{
+			if(parameters.ContainsKey("status")
+				&& parameters.ContainsKey("media[]"))
 			{
-				if(parameters.ContainsKey("status")
-					&& parameters.ContainsKey("media[]"))
-				{
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.StatusesURL + "/update_with_media.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterStatus>(POST(Constants.StatusesURL + "/update_with_media.json", parameters));
 			}
-
-//			public OEmbed OEmbed(Dictionary<string, string> parameters) {}
-
-			public TwitterUserIds RetweetersIds(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterUserIds>(instance.Get(Constants.StatusesURL + "/retweeters/ids.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public IList<TwitterStatus> Lookup(Dictionary<string, string> parameters)
+//		public TwitterOEmbed StatusesOEmbed(Dictionary<string, string> parameters) {}
+
+		public TwitterUserIds StatusesRetweetersIds(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
 			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.StatusesURL + "/lookup.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterUserIds>(GET(Constants.StatusesURL + "/retweeters/ids.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public IList<TwitterStatus> StatusesLookup(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
+			{
+				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.StatusesURL + "/lookup.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}

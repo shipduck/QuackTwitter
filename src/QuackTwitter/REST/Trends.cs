@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,39 +7,36 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-/*		public enum Trends
+	partial class Twitter
+	{
+		public TwitterTrends TrendsPlace(Dictionary<string, string> parameters)
 		{
-			Place,
-			Available,
-			Closest
-		};
-
-		public dynamic REST(Trends type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			if (parameters.ContainsKey("id"))
 			{
-				case Trends.Place:
-					if (parameters.ContainsKey("id"))
-					{
-						return Get(Constants.TrendsURL + "/place.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Trends.Available:
-					return Get(Constants.TrendsURL + "/available.json", parameters);
-				case Trends.Closest:
-					if (parameters.ContainsKey("lat") && parameters.ContainsKey("long"))
-					{
-						return Get(Constants.TrendsURL + "/closest.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
-					throw new Exception();
+				return JsonConvert.DeserializeObject<TwitterTrends>(GET(Constants.TrendsURL + "/place.json", parameters));
 			}
-		}*/
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public IList<TwitterTrendLocation> TrendsAvailable(Dictionary<string, string> parameters = null)
+		{
+			return JsonConvert.DeserializeObject<IList<TwitterTrendLocation>>(GET(Constants.TrendsURL + "/available.json", parameters));
+		}
+
+		public IList<TwitterTrendLocation> TrendsClosest(Dictionary<string, string> parameters)
+		{
+			if(parameters.ContainsKey("lat")
+				&& parameters.ContainsKey("long"))
+			{
+				return JsonConvert.DeserializeObject<IList<TwitterTrendLocation>>(GET(Constants.TrendsURL + "/closest.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+	}
 }

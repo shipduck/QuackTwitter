@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,87 +9,101 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public enum Account
+		public TwitterSettings AccountSettingsGET(Dictionary<string, string> parameters = null)
 		{
-			SettingsGet,
-			VerifyCredentials,
-			SettingsPost,
-			UpdateDeliveryDevice,
-			UpdateProfile,
-			UpdateProfileBackgroundImage,
-			UpdateProfileImage,
-			RemoveProfileBanner,
-			UpdateProfileBanner
-		};
+			return JsonConvert.DeserializeObject<TwitterSettings>(GET(Constants.AccountURL + "/settings.json", parameters));
+		}
 
-		public dynamic REST(Account type, Dictionary<String, String> parameters)
+		public TwitterUser AccountVerifyCredentials(Dictionary<string, string> parameters = null)
 		{
-			switch (type)
+			return JsonConvert.DeserializeObject<TwitterUser>(GET(Constants.AccountURL + "/verify_credentials.json", parameters));
+		}
+
+		public TwitterSettings AccountSettingsPOST(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("trend_location_woe_id")
+				|| parameters.ContainsKey("sleep_time_enabled")
+				|| parameters.ContainsKey("start_sleep_time")
+				|| parameters.ContainsKey("end_sleep_time")
+				|| parameters.ContainsKey("time_zone")
+				|| parameters.ContainsKey("lang"))
 			{
-				case Account.SettingsGet:
-					return Get(Constants.AccountURL + "settings.json", parameters);
-				case Account.VerifyCredentials:
-					return Get(Constants.AccountURL + "verify_credentials.json", parameters);
-				case Account.SettingsPost:
-					if (parameters.ContainsKey("trend_location_woe_id")
-						|| parameters.ContainsKey("sleep_time_enabled")
-						|| parameters.ContainsKey("start_sleep_time")
-						|| parameters.ContainsKey("end_sleep_time")
-						|| parameters.ContainsKey("time_zone")
-						|| parameters.ContainsKey("lang"))
-					{
-						return Post(Constants.AccountURL + "settings.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Account.UpdateDeliveryDevice:
-					if (parameters.ContainsKey("device"))
-					{
-						return Post(Constants.AccountURL + "update_delivery_device.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Account.UpdateProfile:
-					if (parameters.ContainsKey("name")
-						|| parameters.ContainsKey("url")
-						|| parameters.ContainsKey("location")
-						|| parameters.ContainsKey("description")
-						|| parameters.ContainsKey("profile_link_color"))
-					{
-						return Post(Constants.AccountURL + "update_profile.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Account.UpdateProfileBackgroundImage:
-					return Post(Constants.AccountURL + "update_profile_background_image.json", parameters);
-				case Account.UpdateProfileImage:
-					if (parameters.ContainsKey("image"))
-					{
-						return Post(Constants.AccountURL + "update_profile_image.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Account.RemoveProfileBanner:
-					return Post(Constants.AccountURL + "remove_profile_banner.json", parameters);
-				case Account.UpdateProfileBanner:
-					if (parameters.ContainsKey("banner"))
-					{
-						return Post(Constants.AccountURL + "update_profile_banner.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
-					throw new Exception();
+				return JsonConvert.DeserializeObject<TwitterSettings>(POST(Constants.AccountURL + "settings.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterUser AccountUpdateDeliveryDevice(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("device"))
+			{
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_delivery_device.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterUser AccountUpdateProfile(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("name")
+				|| parameters.ContainsKey("url")
+				|| parameters.ContainsKey("location")
+				|| parameters.ContainsKey("description")
+				|| parameters.ContainsKey("profile_link_color")
+				|| parameters.ContainsKey("include_entities")
+				|| parameters.ContainsKey("skip_status"))
+			{
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_profile.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterUser AccountUpdateProfileBackgroundImage(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("image"))
+			{
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_profile_background_image.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public TwitterUser AccountUpdateProfileImage(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("image"))
+			{
+				return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_profile_image.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
+			}
+		}
+
+		public void AccountRemoveProfileBanner(Dictionary<string, string> parameters = null)
+		{
+			POST(Constants.AccountURL + "/remove_profile_banner.json", parameters);
+		}
+
+		public void AccountUpdateProfileBanner(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("banner"))
+			{
+				POST(Constants.AccountURL + "/update_profile_banner.json", parameters);
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}

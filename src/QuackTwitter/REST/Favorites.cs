@@ -9,41 +9,32 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public class TwitterFavorites
+		public IList<TwitterStatus> FavoritesList(Dictionary<string, string> parameters = null)
 		{
-			private Twitter instance;
-			public TwitterFavorites(Twitter instance)
-			{
-				this.instance = instance;
-			}
+			return JsonConvert.DeserializeObject<IList<TwitterStatus>>(GET(Constants.FavoritesURL + "/list.json", parameters));
+		}
 
-			public IList<TwitterStatus> List(Dictionary<string, string> parameters = null)
+		public TwitterStatus FavoritesDestroy(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
 			{
-				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.FavoritesURL + "/list.json", parameters));
+				return JsonConvert.DeserializeObject<TwitterStatus>(POST(Constants.FavoritesURL + "/destroy.json", parameters));
 			}
-
-			public TwitterStatus Destroy(Dictionary<string, string> parameters)
+			else
 			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.FavoritesURL + "/destroy.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				throw new Exception();
 			}
+		}
 
-			public TwitterStatus Create(Dictionary<string, string> parameters)
+		public TwitterStatus FavoritesCreate(Dictionary<string, string> parameters)
+		{
+			if (parameters.ContainsKey("id"))
 			{
-				if (parameters.ContainsKey("id"))
-				{
-					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.FavoritesURL + "/create.json", parameters));
-				}
-				else
-				{
-					throw new Exception();
-				}
+				return JsonConvert.DeserializeObject<TwitterStatus>(POST(Constants.FavoritesURL + "/create.json", parameters));
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 	}
