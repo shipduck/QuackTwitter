@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	public class Cursor
+	public class TwitterUserIds
 	{
 		[JsonProperty("previous_cursor")]
 		public long PreviousCursor { get; private set; }
@@ -17,5 +17,7 @@ namespace QuackTwitter
 		public long NextCursor { get; private set; }
 		[JsonProperty("next_cursor_str")]
 		public string NextCursorStr { get; private set; }
+		[JsonProperty("ids")]
+		public IList<long> Ids { get; private set; }
 	}
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	public class Status
+	public class TwitterStatus
 	{
 		[JsonProperty("created_at")]
 		public string CreatedAt { get; private set; }
@@ -33,25 +33,25 @@ namespace QuackTwitter
 		[JsonProperty("in_reply_to_screen_name")]
 		public string InReplyToScreenName { get; private set; }
 		[JsonProperty("user")]
-		public User User { get; private set; }
+		public TwitterUser User { get; private set; }
 		[JsonProperty("geo")]
-		public _Geo Geo { get; private set; }
+		public TwitterGeo Geo { get; private set; }
 		[JsonProperty("coordinates")]
-		public _Coordinates Coordiates { get; private set; }
+		public TwitterCoordinates Coordiates { get; private set; }
 		[JsonProperty("place")]
-		public Place Place { get; private set; }
+		public TwitterPlace Place { get; private set; }
 		[JsonProperty("contributors")]
-		public IList<Contributor> Contributors { get; private set; }
+		public IList<TwitterContributor> Contributors { get; private set; }
 		[JsonProperty("retweeted_status")]
-		public Status RetweetedStatus { get; private set; }
+		public TwitterStatus RetweetedStatus { get; private set; }
 		[JsonProperty("retweet_count")]
 		public int RetweetCount { get; private set; }
 		[JsonProperty("favorite_count")]
 		public int FavoriteCount { get; private set; }
 		[JsonProperty("entities")]
-		public Entities Entities { get; private set; }
+		public TwitterEntities Entities { get; private set; }
 		[JsonProperty("extended_entities")]
-		public Entities ExtendedEntities { get; private set; }
+		public TwitterEntities ExtendedEntities { get; private set; }
 		[JsonProperty("favorited")]
 		public bool Favorited { get; private set; }
 		[JsonProperty("retweeted")]
@@ -65,7 +65,7 @@ namespace QuackTwitter
 //		[JsonProperty("annoations")]
 //		public IList<Annotation> Annotations { get; private set; }
 		[JsonProperty("current_user_retweet")]
-		public _CurrentUserRetweet CurrentUserRetweet { get; private set; }
+		public TwitterCurrentUserRetweet CurrentUserRetweet { get; private set; }
 		[JsonProperty("filter_level")]
 		public string FilterLevel { get; private set; }
 //		[JsonProperty("scopes")]
@@ -77,14 +77,14 @@ namespace QuackTwitter
 		[JsonProperty("withheld_scope")]
 		public string WithheldScope { get; private set; }
 
-		public class _Geo {
+		public class TwitterGeo {
 			[JsonProperty("type")]
 			public string Type { get; private set; }
 			[JsonProperty("coordinates")]
 			public IList<float> Coordiates { get; private set; }
 		}
 
-		public class _Coordinates
+		public class TwitterCoordinates
 		{
 			[JsonProperty("type")]
 			public string Type { get; private set; }
@@ -92,7 +92,7 @@ namespace QuackTwitter
 			public IList<float> Coordinates { get; private set; }
 		}
 
-		public class Contributor
+		public class TwitterContributor
 		{
 			[JsonProperty("id")]
 			public long id { get; private set; }
@@ -102,7 +102,7 @@ namespace QuackTwitter
 			public string ScreenName { get; private set; }
 		}
 
-		public class _CurrentUserRetweet {
+		public class TwitterCurrentUserRetweet {
 			[JsonProperty("id")]
 			public long Id { get; private set; }
 			[JsonProperty("id_str")]

@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class QuackTwitter
-	{
-		public enum Trends
+/*		public enum Trends
 		{
 			Place,
 			Available,
@@ -42,6 +40,5 @@ namespace QuackTwitter
 				default:
 					throw new Exception();
 			}
-		}
-	}
+		}*/
 }

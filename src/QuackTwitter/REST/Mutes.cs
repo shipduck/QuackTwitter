@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,46 +7,50 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class QuackTwitter
+	partial class Twitter
 	{
-		public enum Mutes
+		public class TwitterMutes
 		{
-			UsersCreate,
-			UsersDestroy,
-			UsersIds,
-			UsersList
-		};
-
-		public dynamic REST(Mutes type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			private Twitter instance;
+			public TwitterMutes(Twitter instance)
 			{
-				case Mutes.UsersCreate:
-					if (parameters.ContainsKey("screen_name")
-						|| parameters.ContainsKey("user_id"))
-					{
-						return Post(Constants.MutesURL + "/users/create.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Mutes.UsersDestroy:
-					if (parameters.ContainsKey("screen_name")
-						|| parameters.ContainsKey("usre_id"))
-					{
-						return Post(Constants.MutesURL + "/users/destroy.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Mutes.UsersIds:
-					return Get(Constants.MutesURL + "users/ids.json", parameters);
-				case Mutes.UsersList:
-					return Get(Constants.MutesURL + "usres/list.json", parameters);
-				default:
+				this.instance = instance;
+			}
+
+			public TwitterUser UsersCreate(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("screen_name")
+					|| parameters.ContainsKey("user_id"))
+				{
+					return JsonConvert.DeserializeObject<TwitterUser>(instance.Post(Constants.MutesURL + "/users/create.json", parameters));
+				}
+				else
+				{
 					throw new Exception();
+				}
+			}
+
+			public TwitterUser UsersDestroy(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("screen_name")
+					|| parameters.ContainsKey("user_id"))
+				{
+					return JsonConvert.DeserializeObject<TwitterUser>(instance.Post(Constants.MutesURL + "/users/destroy.json", parameters));
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+
+			public TwitterUserIds UsersIds(Dictionary<string, string> parameters)
+			{
+				return JsonConvert.DeserializeObject<TwitterUserIds>(instance.Get(Constants.MutesURL + "/users/ids.json", parameters));
+			}
+
+			public TwitterUserList UsersList(Dictionary<string, string> parameters)
+			{
+				return JsonConvert.DeserializeObject<TwitterUserList>(instance.Get(Constants.MutesURL + "/users/list.json", parameters));
 			}
 		}
 	}

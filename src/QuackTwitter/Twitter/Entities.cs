@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	public class Entities
+	public class TwitterEntities
 	{
 		[JsonProperty("hashtags")]
-		public IList<Hashtag> Hashtags { get; private set; }
+		public IList<TwitterHashtag> Hashtags { get; private set; }
 		[JsonProperty("symbols")]
-		public IList<Symbol> Symbols { get; private set; }
+		public IList<TwitterSymbol> Symbols { get; private set; }
 		[JsonProperty("user_mentions")]
-		public IList<UserMention> UserMentions { get; private set; }
+		public IList<TwitterUserMention> UserMentions { get; private set; }
 		[JsonProperty("urls")]
-		public IList<_URL> URLs { get; private set; }
+		public IList<TwitterURL> URLs { get; private set; }
 		[JsonProperty("media")]
-		public IList<_Media> Media { get; private set; }
+		public IList<TwitterMedia> Media { get; private set; }
 		[JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-		public _Description Description { get; private set; }
+		public TwitterDescription Description { get; private set; }
 
-		public class Hashtag
+		public class TwitterHashtag
 		{
 			[JsonProperty("text")]
 			public string Text { get; private set; }
@@ -31,7 +31,7 @@ namespace QuackTwitter
 			public IList<int> Indices { get; private set; }
 		}
 
-		public class Symbol
+		public class TwitterSymbol
 		{
 			[JsonProperty("text")]
 			public string Text { get; private set; }
@@ -39,7 +39,7 @@ namespace QuackTwitter
 			public IList<int> Indices { get; private set; }
 		}
 
-		public class UserMention
+		public class TwitterUserMention
 		{
 			[JsonProperty("screen_name")]
 			public string ScreenName { get; private set; }
@@ -53,7 +53,7 @@ namespace QuackTwitter
 			public IList<int> Indices { get; private set; }
 		}
 
-		public class _URL
+		public class TwitterURL
 		{
 			[JsonProperty("url")]
 			public string URL { get; private set; }
@@ -65,7 +65,7 @@ namespace QuackTwitter
 			public IList<int> Indices { get; private set; }
 		}
 
-		public class _Media
+		public class TwitterMedia
 		{
 			[JsonProperty("id")]
 			public long Id { get; private set; }
@@ -86,9 +86,9 @@ namespace QuackTwitter
 			[JsonProperty("type")]
 			public string Type { get; private set; }
 			[JsonProperty("sizes")]
-			public IDictionary<string, Size> Sizes { get; private set; }
+			public IDictionary<string, TwitterSize> Sizes { get; private set; }
 
-			public class Size
+			public class TwitterSize
 			{
 				[JsonProperty("w")]
 				public int W { get; private set; }
@@ -99,10 +99,10 @@ namespace QuackTwitter
 			}
 		}
 
-		public class _Description
+		public class TwitterDescription
 		{
 			[JsonProperty("urls")]
-			public IList<_URL> URLs { get; private set; }
+			public IList<TwitterURL> URLs { get; private set; }
 		}
 	}
 }

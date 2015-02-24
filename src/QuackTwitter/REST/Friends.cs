@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,38 +7,38 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class QuackTwitter
+	partial class Twitter
 	{
-		public enum Friends
+		public class TwitterFriends
 		{
-			Ids,
-			List
-		};
-
-		public dynamic REST(Friends type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			private Twitter instance;
+			public TwitterFriends(Twitter instance)
 			{
-				case Friends.Ids:
-					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
-					{
-						return Get(Constants.FriendsURL + "/ids.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Friends.List:
-					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
-					{
-						return Get(Constants.FriendsURL + "/list.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
+				this.instance = instance;
+			}
+
+			public TwitterUserIds Ids(Dictionary<string, string> parameters) {
+				if(parameters.ContainsKey("user_id")
+					|| parameters.ContainsKey("screen_name"))
+				{
+					return JsonConvert.DeserializeObject<TwitterUserIds>(instance.Get(Constants.FriendsURL + "/ids.json", parameters));
+				}
+				else
+				{
 					throw new Exception();
+				}
+			}
+
+			public TwitterUserList List(Dictionary<string, string> parameters)
+			{
+				if(parameters.ContainsKey("user_id")
+					|| parameters.ContainsKey("screen_name")) {
+						return JsonConvert.DeserializeObject<TwitterUserList>(instance.Get(Constants.FriendsURL + "/list.json", parameters));
+				}
+				else
+				{
+					throw new Exception();
+				}
 			}
 		}
 	}

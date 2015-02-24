@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	public class User
+	public class TwitterUser
 	{
 		[JsonProperty("id")]
 		public long Id { get; private set; }
@@ -27,7 +27,7 @@ namespace QuackTwitter
 		[JsonProperty("url")]
 		public string URL { get; private set; }
 		[JsonProperty("entities")]
-		public Entities Entities;
+		public TwitterEntities Entities;
 		[JsonProperty("protected")]
 		public bool Protected { get; private set; }
 		[JsonProperty("followers_count")]
@@ -53,7 +53,7 @@ namespace QuackTwitter
 		[JsonProperty("lang")]
 		public string Lang { get; private set; }
 		[JsonProperty("status")]
-		public Status Status { get; private set; }
+		public TwitterStatus Status { get; private set; }
 		[JsonProperty("contributors_enabled")]
 		public bool ContributorsEnabled { get; private set; }
 		[JsonProperty("is_translator")]

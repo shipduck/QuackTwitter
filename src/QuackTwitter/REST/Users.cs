@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,72 +7,66 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class QuackTwitter
+	partial class Twitter
 	{
-		public enum Users
+		public interface ITwitterUsers
 		{
-			Lookup,
-			Show,
-			Search,
-			ProfileBanner,
-			SuggestionsSlug,
-			Suggestions,
-			SuggestionsSlugMembers,
-			ReportSpam
-		};
+			IList<TwitterUser> Lookup(Dictionary<string, string> parameters);
+			TwitterUser Show(Dictionary<string, string> parameters);
+			IList<TwitterUser> Search(Dictionary<string, string> parameters);
+//			Dictionary<string, Size> ProfileBanner(Dictionary<string, string> paramters);
+//			void SuggestionsSlug();
+//			void Suggestions();
+//			void SuggestionsSlugMemebers();
+		}
 
-		public dynamic REST(Users type, Dictionary<String, String> parameters)
+		private class TwitterUsers : ITwitterUsers
 		{
-			switch (type)
+			private Twitter instance;
+			public TwitterUsers(Twitter instance)
 			{
-				case Users.Lookup:
-					return Get(Constants.UsersURL + "lookup.json", parameters);
-				case Users.Show:
-					if (parameters.ContainsKey("user_id") || parameters.ContainsKey("screen_name"))
-					{
-						return Get(Constants.UsersURL + "show.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Users.Search:
-					if (parameters.ContainsKey("q"))
-					{
-						return Get(Constants.UsersURL + "search.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Users.ProfileBanner:
-					if (parameters.ContainsKey("user_id")
-						|| parameters.ContainsKey("screen_name"))
-					{
-						return Get(Constants.UsersURL + "profile_banner.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Users.SuggestionsSlug:
-					if (parameters.ContainsKey("slug"))
-					{
-						return Get(Constants.UsersURL + "suggestions/" + parameters["slug"] + ".json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Users.Suggestions:
-					return Get(Constants.UsersURL + "suggestions.json", parameters);
-				case Users.SuggestionsSlugMembers:
-					return Get(Constants.UsersURL + "suggestions/" + parameters["slug"] + "/members.json", parameters);
-				case Users.ReportSpam:
-					return Post(Constants.UsersURL + "report_spam.json", parameters);
-				default:
-					throw new Exception();
+				this.instance = instance;
 			}
+
+			public IList<TwitterUser> Lookup(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("screen_name")
+					|| parameters.ContainsKey("user_id"))
+				{
+					return JsonConvert.DeserializeObject<IList<TwitterUser>>(instance.Get(Constants.UsersURL + "/lookup.json", parameters));
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+
+			public TwitterUser Show(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("user_id")
+					|| parameters.ContainsKey("screen_name"))
+				{
+					return JsonConvert.DeserializeObject<TwitterUser>(instance.Get(Constants.UsersURL + "/show.json", parameters));
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+
+			public IList<TwitterUser> Search(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("q"))
+				{
+					return JsonConvert.DeserializeObject<IList<TwitterUser>>(instance.Get(Constants.UsersURL + "/search.json", parameters));
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+
+//			public Dictionary<string, Size> ProfileBanner(Dictionary<string, string> paramters) {}
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,41 +7,43 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class QuackTwitter
+	partial class Twitter
 	{
-		public enum Favorites
+		public class TwitterFavorites
 		{
-			List,
-			Destroy,
-			Create
-		};
-
-		public dynamic REST(Favorites type, Dictionary<String, String> parameters)
-		{
-			switch (type)
+			private Twitter instance;
+			public TwitterFavorites(Twitter instance)
 			{
-				case Favorites.List:
-					return Get(Constants.FavoritesURL + "list.json", parameters);
-				case Favorites.Destroy:
-					if (parameters.ContainsKey("id"))
-					{
-						return Post(Constants.FavoritesURL + "destroy.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				case Favorites.Create:
-					if (parameters.ContainsKey("id"))
-					{
-						return Post(Constants.FavoritesURL + "create.json", parameters);
-					}
-					else
-					{
-						throw new Exception();
-					}
-				default:
+				this.instance = instance;
+			}
+
+			public IList<TwitterStatus> List(Dictionary<string, string> parameters = null)
+			{
+				return JsonConvert.DeserializeObject<IList<TwitterStatus>>(instance.Get(Constants.FavoritesURL + "/list.json", parameters));
+			}
+
+			public TwitterStatus Destroy(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("id"))
+				{
+					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.FavoritesURL + "/destroy.json", parameters));
+				}
+				else
+				{
 					throw new Exception();
+				}
+			}
+
+			public TwitterStatus Create(Dictionary<string, string> parameters)
+			{
+				if (parameters.ContainsKey("id"))
+				{
+					return JsonConvert.DeserializeObject<TwitterStatus>(instance.Post(Constants.FavoritesURL + "/create.json", parameters));
+				}
+				else
+				{
+					throw new Exception();
+				}
 			}
 		}
 	}

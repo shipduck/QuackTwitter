@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	public class Place
+	public class TwitterPlace
 	{
 		[JsonProperty("id")]
 		public string Id { get; private set; }
@@ -24,13 +24,13 @@ namespace QuackTwitter
 		[JsonProperty("country")]
 		public string Country { get; private set; }
 		[JsonProperty("contained_within")]
-		public IList<Place> ContainedWithin { get; private set; }
+		public IList<TwitterPlace> ContainedWithin { get; private set; }
 		[JsonProperty("bounding_box")]
-		public _BoundingBox BoundingBox { get; private set; }
+		public TwitterBoundingBox BoundingBox { get; private set; }
 		[JsonProperty("attributes")]
-		public _Attributes Attributes { get; private set; }
+		public TwitterAttributes Attributes { get; private set; }
 
-		public class _BoundingBox
+		public class TwitterBoundingBox
 		{
 			[JsonProperty("type")]
 			public string Type { get; private set; }
@@ -38,7 +38,7 @@ namespace QuackTwitter
 			public IList<IList<IList<float>>> Coordinates { get; private set; }
 		}
 
-		public class _Attributes
+		public class TwitterAttributes
 		{
 			[JsonProperty("street_address")]
 			public string StreetAddress { get; private set; }

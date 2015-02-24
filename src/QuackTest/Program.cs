@@ -12,13 +12,13 @@ namespace QuackTest
 	{
 		static void Main(string[] args)
 		{
-			var twitter = new QuackTwitter.QuackTwitter();
+			var twitter = new Twitter();
 			twitter.Authenticate();
 
 			var parameters = new Dictionary<String, String>();
 			parameters.Add("count", "2");
-			IList<Status> json = twitter.Statuses.UserTimeline();
-			foreach (Status tweet in json)
+			var json = twitter.Statuses.UserTimeline();
+			foreach (var tweet in json)
 			{
 				Console.WriteLine(tweet.Text);
 			}
