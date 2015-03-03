@@ -15,5 +15,12 @@ namespace QuackTwitter
 
             return JsonConvert.DeserializeObject<TwitterMedia>(POST(Constants.MediaURL + "/upload.json", parameters));
         }
+
+        async public Task<TwitterMedia> MediaUploadAsync(IDictionary<string, string> parameters)
+        {
+            Utils.RequiredParameters(parameters, "media");
+
+            return JsonConvert.DeserializeObject<TwitterMedia>(await POSTasync(Constants.MediaURL + "/upload.json", parameters));
+        }
     }
 }

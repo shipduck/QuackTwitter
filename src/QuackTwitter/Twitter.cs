@@ -27,15 +27,32 @@ namespace QuackTwitter
             consumer = new DesktopConsumer(serviceProviderDescription, tokenManager);
         }
 
+        async public Task<string> GETasync(String url, IDictionary<String, String> parameters)
+        {
+            return await Task.Factory.StartNew<string>(() =>
+            {
+                return GET(url, parameters);
+            });
+        }
+
         public string GET(String url, IDictionary<String, String> parameters)
         {
             if (parameters == null)
             {
                 parameters = new Dictionary<string, string>();
             }
+
             var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.GetRequest), Tokens.AccessToken, parameters);
             var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
             return response.GetResponseReader().ReadToEnd();
+        }
+
+        async public Task<string> POSTasync(String url, IDictionary<String, String> parameters)
+        {
+            return await Task.Factory.StartNew<string>(() =>
+            {
+                return POST(url, parameters);
+            });
         }
 
         public string POST(String url, IDictionary<String, String> parameters)
@@ -44,6 +61,7 @@ namespace QuackTwitter
             {
                 parameters = new Dictionary<string, string>();
             }
+
             var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.PostRequest), Tokens.AccessToken, parameters);
             var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
             return response.GetResponseReader().ReadToEnd();

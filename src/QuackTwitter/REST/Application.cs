@@ -13,5 +13,10 @@ namespace QuackTwitter
 		{
 			return JsonConvert.DeserializeObject<TwitterRateLimitStatus>(GET(Constants.ApplicationURL + "/rate_limit_status.json", parameters));
 		}
+
+        async public Task<TwitterRateLimitStatus> ApplicationRateLimitStatusAsync(IDictionary<string, string> parameters = null)
+        {
+            return JsonConvert.DeserializeObject<TwitterRateLimitStatus>(await GETasync(Constants.ApplicationURL + "/rate_limit_status.json", parameters));
+        }
 	}
 }

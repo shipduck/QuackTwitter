@@ -15,5 +15,12 @@ namespace QuackTwitter
 
             return JsonConvert.DeserializeObject<TwitterSearch>(GET(Constants.SearchURL + "/tweets.json", parameters));
         }
+
+        async public Task<TwitterSearch> SearchTweetsAsync(IDictionary<string, string> parameters)
+        {
+            Utils.RequiredParameters(parameters, "q");
+
+            return JsonConvert.DeserializeObject<TwitterSearch>(await GETasync(Constants.SearchURL + "/tweets.json", parameters));
+        }
     }
 }
