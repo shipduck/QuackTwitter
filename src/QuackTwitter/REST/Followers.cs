@@ -7,32 +7,20 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class Twitter
-	{
-		public TwitterUserIds FollowersIds(Dictionary<string, string> parameters)
-		{
-			if (parameters.ContainsKey("user_id")
-				|| parameters.ContainsKey("screen_name"))
-			{
-				return JsonConvert.DeserializeObject<TwitterUserIds>(GET(Constants.FollowersURL + "/ids.json", parameters));
-			}
-			else
-			{
-				throw new Exception();
-			}
-		}
+    partial class Twitter
+    {
+        public TwitterUserIds FollowersIds(Dictionary<string, string> parameters)
+        {
+            Utils.RequiredParameters(parameters, "user_id", "screen_name");
 
-		public TwitterUsers FollowersList(Dictionary<string, string> parameters)
-		{
-			if (parameters.ContainsKey("user_id")
-				|| parameters.ContainsKey("screen_name"))
-			{
-				return JsonConvert.DeserializeObject<TwitterUsers>(GET(Constants.FollowersURL + "/list.json", parameters));
-			}
-			else
-			{
-				throw new Exception();
-			}
-		}
-	}
+            return JsonConvert.DeserializeObject<TwitterUserIds>(GET(Constants.FollowersURL + "/ids.json", parameters));
+        }
+
+        public TwitterUsers FollowersList(Dictionary<string, string> parameters)
+        {
+            Utils.RequiredParameters(parameters, "user_id", "screen_name");
+
+            return JsonConvert.DeserializeObject<TwitterUsers>(GET(Constants.FollowersURL + "/list.json", parameters));
+        }
+    }
 }

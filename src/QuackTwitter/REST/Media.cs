@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 
 namespace QuackTwitter
 {
-	partial class Twitter
-	{
-		public TwitterMedia MediaUpload(Dictionary<string, string> parameters)
-		{
-			if (parameters.ContainsKey("media"))
-			{
-				return JsonConvert.DeserializeObject<TwitterMedia>(POST(Constants.MediaURL + "/upload.json", parameters));
-			}
-			else {
-				throw new Exception();
-			}
-		}
-	}
+    partial class Twitter
+    {
+        public TwitterMedia MediaUpload(Dictionary<string, string> parameters)
+        {
+            Utils.RequiredParameters(parameters, "media");
+
+            return JsonConvert.DeserializeObject<TwitterMedia>(POST(Constants.MediaURL + "/upload.json", parameters));
+        }
+    }
 }
