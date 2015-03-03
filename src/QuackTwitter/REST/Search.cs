@@ -9,7 +9,7 @@ namespace QuackTwitter
 {
     partial class Twitter
     {
-        public TwitterSearch SearchTweets(Dictionary<string, string> parameters)
+        public TwitterSearch SearchTweets(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "q");
 

@@ -9,22 +9,22 @@ namespace QuackTwitter
 {
 	partial class Twitter
 	{
-		public TwitterConfiguration HelpConfiguration(Dictionary<string, string> parameters = null)
+		public TwitterConfiguration HelpConfiguration(IDictionary<string, string> parameters = null)
 		{
 			return JsonConvert.DeserializeObject<TwitterConfiguration>(GET(Constants.HelpURL + "/configuration.json", parameters));
 		}
 
-		public IList<TwitterLanguage> HelpLanguages(Dictionary<string, string> parameters = null)
+		public IList<TwitterLanguage> HelpLanguages(IDictionary<string, string> parameters = null)
 		{
 			return JsonConvert.DeserializeObject<IList<TwitterLanguage>>(GET(Constants.HelpURL + "/languages.json", parameters));
 		}
 
-		public TwitterPrivacy HelpPrivacy(Dictionary<string, string> parameters = null)
+		public TwitterPrivacy HelpPrivacy(IDictionary<string, string> parameters = null)
 		{
 			return JsonConvert.DeserializeObject<TwitterPrivacy>(GET(Constants.HelpURL + "/privacy.json", parameters));
 		}
 
-		public TwitterTOS HelpTOS(Dictionary<string, string> parameters = null)
+		public TwitterTOS HelpTOS(IDictionary<string, string> parameters = null)
 		{
 			return JsonConvert.DeserializeObject<TwitterTOS>(GET(Constants.HelpURL + "/tos.json", parameters));
 		}

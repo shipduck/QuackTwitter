@@ -9,17 +9,17 @@ namespace QuackTwitter
 {
     partial class Twitter
     {
-        public TwitterSettings AccountSettingsGET(Dictionary<string, string> parameters = null)
+        public TwitterSettings AccountSettingsGET(IDictionary<string, string> parameters = null)
         {
             return JsonConvert.DeserializeObject<TwitterSettings>(GET(Constants.AccountURL + "/settings.json", parameters));
         }
 
-        public TwitterUser AccountVerifyCredentials(Dictionary<string, string> parameters = null)
+        public TwitterUser AccountVerifyCredentials(IDictionary<string, string> parameters = null)
         {
             return JsonConvert.DeserializeObject<TwitterUser>(GET(Constants.AccountURL + "/verify_credentials.json", parameters));
         }
 
-        public TwitterSettings AccountSettingsPOST(Dictionary<string, string> parameters)
+        public TwitterSettings AccountSettingsPOST(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters,
                 "trend_location_woe_id",
@@ -32,14 +32,14 @@ namespace QuackTwitter
             return JsonConvert.DeserializeObject<TwitterSettings>(POST(Constants.AccountURL + "settings.json", parameters));
         }
 
-        public TwitterUser AccountUpdateDeliveryDevice(Dictionary<string, string> parameters)
+        public TwitterUser AccountUpdateDeliveryDevice(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "device");
 
             return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_delivery_device.json", parameters));
         }
 
-        public TwitterUser AccountUpdateProfile(Dictionary<string, string> parameters)
+        public TwitterUser AccountUpdateProfile(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters,
                 "name",
@@ -53,26 +53,26 @@ namespace QuackTwitter
             return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_profile.json", parameters));
         }
 
-        public TwitterUser AccountUpdateProfileBackgroundImage(Dictionary<string, string> parameters)
+        public TwitterUser AccountUpdateProfileBackgroundImage(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "image");
 
             return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_profile_background_image.json", parameters));
         }
 
-        public TwitterUser AccountUpdateProfileImage(Dictionary<string, string> parameters)
+        public TwitterUser AccountUpdateProfileImage(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "image");
 
             return JsonConvert.DeserializeObject<TwitterUser>(POST(Constants.AccountURL + "/update_profile_image.json", parameters));
         }
 
-        public void AccountRemoveProfileBanner(Dictionary<string, string> parameters = null)
+        public void AccountRemoveProfileBanner(IDictionary<string, string> parameters = null)
         {
             POST(Constants.AccountURL + "/remove_profile_banner.json", parameters);
         }
 
-        public void AccountUpdateProfileBanner(Dictionary<string, string> parameters)
+        public void AccountUpdateProfileBanner(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "banner");
 

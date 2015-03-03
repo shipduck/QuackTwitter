@@ -9,14 +9,14 @@ namespace QuackTwitter
 {
     partial class Twitter
     {
-        public TwitterUserIds FriendsIds(Dictionary<string, string> parameters)
+        public TwitterUserIds FriendsIds(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "user_id", "screen_name");
 
             return JsonConvert.DeserializeObject<TwitterUserIds>(GET(Constants.FriendsURL + "/ids.json", parameters));
         }
 
-        public TwitterUsers FriendsList(Dictionary<string, string> parameters)
+        public TwitterUsers FriendsList(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "user_id", "screen_name");
 

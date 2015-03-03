@@ -9,7 +9,7 @@ namespace QuackTwitter
 {
     partial class Twitter
     {
-        public TwitterMedia MediaUpload(Dictionary<string, string> parameters)
+        public TwitterMedia MediaUpload(IDictionary<string, string> parameters)
         {
             Utils.RequiredParameters(parameters, "media");
 

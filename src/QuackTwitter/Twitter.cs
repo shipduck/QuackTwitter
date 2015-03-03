@@ -27,7 +27,7 @@ namespace QuackTwitter
 			consumer = new DesktopConsumer(serviceProviderDescription, tokenManager);
 		}
 
-		public string GET(String url, Dictionary<String, String> parameters)
+		public string GET(String url, IDictionary<String, String> parameters)
 		{
 			if (parameters == null)
 			{
@@ -38,7 +38,7 @@ namespace QuackTwitter
 			return response.GetResponseReader().ReadToEnd();
 		}
 
-		public string POST(String url, Dictionary<String, String> parameters)
+		public string POST(String url, IDictionary<String, String> parameters)
 		{
 			if (parameters == null)
 			{
