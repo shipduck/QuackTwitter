@@ -92,7 +92,7 @@ namespace QuackTwitter
 		public bool Following { get; private set; }
 		[JsonProperty("follow_request_sent")]
 		public bool FollowRequestSent { get; private set; }
-		[JsonProperty("notifications")]
+		[JsonProperty("notifications", NullValueHandling = NullValueHandling.Ignore)]
 		public bool Notifications { get; private set; }
 		[JsonProperty("show_all_inline_media")]
 		public bool ShowAllInlineMedia { get; private set; }
