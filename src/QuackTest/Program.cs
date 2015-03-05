@@ -22,6 +22,7 @@ namespace QuackTest
 			{
 				Console.WriteLine(tweet.Text);
 			}
+            Console.WriteLine("url : ", twitter.AccountUpdateProfileAsync(url: "http://quaktwitter.com/quack").Result.URL);
 
 			Console.ReadLine();
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,12 +55,19 @@ namespace QuackTwitter
 
         public static void RequiredParameters(IDictionary<string, string> parameters, params object[] required)
         {
+            bool condFail = true;
             foreach (object cond in required)
             {
                 if (EvalCond(parameters, cond))
                 {
-                    throw new ArgumentException(string.Format("Required argument is missing ({0})", string.Join(" | ", required)), cond.ToString());
+                    condFail = false;
+                    break;
                 }
+            }
+
+            if (condFail)
+            {
+                throw new ArgumentException(string.Format("Required argument is missing ({0})", string.Join(" | ", required)));
             }
         }
 
@@ -85,7 +93,7 @@ namespace QuackTwitter
             return true;
         }
 
-        public static void SetDefaultValue(IDictionary<string, string> parameters, string paramName, object defaultValue)
+        internal static void SetDefaultValue(IDictionary<string, string> parameters, string paramName, object defaultValue)
         {
             if (!parameters.ContainsKey(paramName))
             {
@@ -93,7 +101,7 @@ namespace QuackTwitter
             }
         }
 
-        public static string ToString(object val)
+        internal static string ToString(object val)
         {
             if (val is bool)
             {
@@ -108,8 +116,29 @@ namespace QuackTwitter
             {
                 return val as string;
             }
+            if (val is Language)
+            {
+                return ConversionToString.EnumValueMapToString(val);
+            }
 
             return val.ToString();
+        }
+
+
+        internal static void SetParam<T>(Dictionary<string, string> dict, string key, Nullable<T> val) where T : struct
+        {
+            if (val.HasValue)
+            {
+                dict.Add(key, ToString(val.Value));
+            }
+        }
+
+        internal static void SetParam<T>(Dictionary<string, string> dict, string key, T val) where T : class
+        {
+            if (val != null)
+            {
+                dict.Add(key, ToString(val));
+            }
         }
     }
 }
