@@ -41,7 +41,7 @@ namespace QuackTwitter
 		[JsonProperty("favourites_count")]
 		public int FavouritesCount { get; private set; }
 		[JsonProperty("utc_offset")]
-		public int UTCOffset { get; private set; }
+		public int? UTCOffset { get; private set; }
 		[JsonProperty("time_zone")]
 		public string TimeZone { get; private set; }
 		[JsonProperty("geo_enabled")]
@@ -91,7 +91,7 @@ namespace QuackTwitter
 		[JsonProperty("following", NullValueHandling = NullValueHandling.Ignore)]
 		public bool Following { get; private set; }
 		[JsonProperty("follow_request_sent")]
-		public bool FollowRequestSent { get; private set; }
+		public bool? FollowRequestSent { get; private set; }
 		[JsonProperty("notifications", NullValueHandling = NullValueHandling.Ignore)]
 		public bool Notifications { get; private set; }
 		[JsonProperty("show_all_inline_media")]
