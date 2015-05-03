@@ -5,6 +5,7 @@ using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
 using Newtonsoft.Json;
 using QuackTwitter;
+using System.IO;
 
 namespace QuackTest
 {
@@ -24,7 +25,21 @@ namespace QuackTest
 			}
             Console.WriteLine("url : ", twitter.AccountUpdateProfileAsync(url: "http://quaktwitter.com/quack").Result.URL);
 
-			Console.ReadLine();
+            var writeFile = new StreamWriter("test.txt");
+
+            twitter.CreateTimeline((status) =>
+                {
+                    Console.WriteLine(status.Text);
+                    writeFile.WriteLine(status.Text);
+                });
+
+            DateTime startTime = DateTime.Now;
+            while ((DateTime.Now - startTime).TotalSeconds < 30)
+            {
+            }
+
+            writeFile.Close();
+            Console.ReadLine();
 		}
 	}
 }

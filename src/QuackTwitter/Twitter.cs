@@ -1,10 +1,13 @@
 ﻿using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,6 +68,39 @@ namespace QuackTwitter
             var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.PostRequest), Tokens.AccessToken, parameters);
             var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
             return response.GetResponseReader().ReadToEnd();
+        }
+
+        public void CreateTimeline(Action<TwitterStatus> callback)
+        {
+            MessageReceivingEndpoint endpoint = new MessageReceivingEndpoint("https://userstream.twitter.com/2/user.json", HttpDeliveryMethods.PostRequest | HttpDeliveryMethods.AuthorizationHeaderRequest);
+
+            var req = consumer.PrepareAuthorizedRequest(endpoint, Tokens.AccessToken);
+            var resTask = req.GetResponseAsync();
+            resTask.Wait();
+            var res = resTask.Result;
+
+            Stream st = res.GetResponseStream();
+            var sr = new StreamReader(st);
+
+            var task = new Task(() =>
+                {
+                    while(true)
+                    {
+                        var str = sr.ReadLine();
+                        if(str == "")
+                        {
+                            continue;
+                        }
+
+                        var status = JsonConvert.DeserializeObject<TwitterStatus>(str);
+                        if(status.Id != 0)
+                        {
+                            callback(status);
+                        }
+                    }
+                });
+
+            task.Start();
         }
     }
 
