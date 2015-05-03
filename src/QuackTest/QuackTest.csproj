@@ -129,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuackTwitter\QuackTwitter.csproj">
-      <Project>{6bdb658c-0666-4067-822e-02f46287d9df}</Project>
+      <Project>{65e6feb8-320f-4806-a67b-0426b48d0b5d}</Project>
       <Name>QuackTwitter</Name>
     </ProjectReference>
   </ItemGroup>
