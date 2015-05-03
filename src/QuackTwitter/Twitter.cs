@@ -1,21 +1,20 @@
 ﻿using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace QuackTwitter
 {
     public partial class Twitter
     {
-        private DesktopConsumer consumer;
+        private DesktopConsumer consumer = null;
 
         public void Authenticate()
         {
@@ -30,77 +29,60 @@ namespace QuackTwitter
             consumer = new DesktopConsumer(serviceProviderDescription, tokenManager);
         }
 
+		async protected Task<StreamReader> ExecuteRequest(bool postRequest, String url, IDictionary<String, String> parameters)
+		{
+			if (parameters == null)
+			{
+				parameters = new Dictionary<string, string>();
+			}
+
+			HttpDeliveryMethods method = HttpDeliveryMethods.AuthorizationHeaderRequest;
+			if (postRequest)
+			{
+				method |= HttpDeliveryMethods.PostRequest;
+			}
+			else
+			{
+				method |= HttpDeliveryMethods.GetRequest;
+			}
+
+			var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, method), Tokens.AccessToken, parameters);
+            var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
+			return response.GetResponseReader();
+		}
+
+		async public Task<StreamReader> GETstream(String url, IDictionary<String, String> parameters)
+		{
+			return await ExecuteRequest(false, url, parameters);
+		}
+
         async public Task<string> GETasync(String url, IDictionary<String, String> parameters)
         {
-            return await Task.Factory.StartNew<string>(() =>
-            {
-                return GET(url, parameters);
-            });
+			StreamReader reader = await ExecuteRequest(false, url, parameters);
+			return await reader.ReadToEndAsync();
         }
 
         public string GET(String url, IDictionary<String, String> parameters)
         {
-            if (parameters == null)
-            {
-                parameters = new Dictionary<string, string>();
-            }
-
-            var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.GetRequest), Tokens.AccessToken, parameters);
-            var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
-            return response.GetResponseReader().ReadToEnd();
+			StreamReader reader = ExecuteRequest(false, url, parameters).Result;
+			return reader.ReadToEnd();
         }
+
+		async public Task<StreamReader> POSTstream(String url, IDictionary<String, String> parameters)
+		{
+			return await ExecuteRequest(true, url, parameters);
+		}
 
         async public Task<string> POSTasync(String url, IDictionary<String, String> parameters)
         {
-            return await Task.Factory.StartNew<string>(() =>
-            {
-                return POST(url, parameters);
-            });
+			StreamReader reader = await ExecuteRequest(true, url, parameters);
+			return await reader.ReadToEndAsync();
         }
 
         public string POST(String url, IDictionary<String, String> parameters)
         {
-            if (parameters == null)
-            {
-                parameters = new Dictionary<string, string>();
-            }
-
-            var request = consumer.PrepareAuthorizedRequest(new MessageReceivingEndpoint(url, HttpDeliveryMethods.PostRequest), Tokens.AccessToken, parameters);
-            var response = consumer.Channel.WebRequestHandler.GetResponse(request, DirectWebRequestOptions.AcceptAllHttpResponses);
-            return response.GetResponseReader().ReadToEnd();
-        }
-
-        public void CreateTimeline(Action<TwitterStatus> callback)
-        {
-            MessageReceivingEndpoint endpoint = new MessageReceivingEndpoint("https://userstream.twitter.com/2/user.json", HttpDeliveryMethods.PostRequest | HttpDeliveryMethods.AuthorizationHeaderRequest);
-
-            var req = consumer.PrepareAuthorizedRequest(endpoint, Tokens.AccessToken);
-            var resTask = req.GetResponseAsync();
-            resTask.Wait();
-            var res = resTask.Result;
-
-            Stream st = res.GetResponseStream();
-            var sr = new StreamReader(st);
-
-            var task = new Task(() =>
-                {
-                    while(true)
-                    {
-                        var str = sr.ReadLine();
-                        if(str == "")
-                        {
-                            continue;
-                        }
-
-                        var status = JsonConvert.DeserializeObject<TwitterStatus>(str);
-                        if(status.Id != 0)
-                        {
-                            callback(status);
-                        }
-                    }
-                });
-
-            task.Start();
+			StreamReader reader = ExecuteRequest(true, url, parameters).Result;
+			return reader.ReadToEnd();
         }
     }
 

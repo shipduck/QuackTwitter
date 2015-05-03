@@ -25,6 +25,7 @@ namespace QuackTwitter
         public const String TrendsURL = BaseURL + "/trends";
         public const String ApplicationURL = BaseURL + "/application";
         public const String HelpURL = BaseURL + "/help";
+		public const String UserStreamURL = "https://userstream.twitter.com/1.1/user.json";
     }
 
     [AttributeUsage(AttributeTargets.Field)]

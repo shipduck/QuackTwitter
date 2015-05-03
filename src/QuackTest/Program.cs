@@ -13,33 +13,35 @@ namespace QuackTest
 	{
 		static void Main(string[] args)
 		{
-			var twitter = new Twitter();
+			Twitter twitter = new Twitter();
 			twitter.Authenticate();
 
-			var parameters = new Dictionary<String, String>();
-			parameters.Add("count", "3");
-			var json = twitter.StatusesUserTimelineAsync(parameters);
-			foreach (var tweet in json.Result)
-			{
-				Console.WriteLine(tweet.Text);
-			}
-            Console.WriteLine("url : ", twitter.AccountUpdateProfileAsync(url: "http://quaktwitter.com/quack").Result.URL);
+            Twitter.BaseStream userStream = twitter.GetUserStream();
 
-            var writeFile = new StreamWriter("test.txt");
+            userStream.StreamEventHandler += userStream_StreamEventHandler;
 
-            twitter.CreateTimeline((status) =>
-                {
-                    Console.WriteLine(status.Text);
-                    writeFile.WriteLine(status.Text);
-                });
-
-            DateTime startTime = DateTime.Now;
-            while ((DateTime.Now - startTime).TotalSeconds < 30)
-            {
-            }
-
-            writeFile.Close();
             Console.ReadLine();
 		}
+
+        static void userStream_StreamEventHandler(object sender, StreamEvent e)
+        {
+            TwitterStatus[] statuses = null;
+            if (e.type == StreamEvent.EventType.Status)
+            {
+                statuses = new TwitterStatus[] { e.data as TwitterStatus };
+            }
+            else if (e.type == StreamEvent.EventType.Statuses )
+            {
+                statuses = e.data as TwitterStatus[];
+            }
+
+            foreach(TwitterStatus status in statuses)
+            {   
+                Console.WriteLine(String.Format("{0}({1})", status.User.ScreenName, ""));
+                Console.WriteLine(String.Format("\t{0}", status.Text));
+                Console.WriteLine("");
+            }
+            
+        }
 	}
 }
