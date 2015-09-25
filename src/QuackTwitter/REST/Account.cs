@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PCLStorage;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -288,7 +287,7 @@ namespace QuackTwitter
         }
         
         private IDictionary<string, string> GenerateAccountUpdateProfileBannerParam(
-            Byte[] bannerData, IFile bannerFile, string bannerPath,
+            Byte[] bannerData, FileStream bannerStream, string bannerPath,
             UInt32? width, UInt32? height,
             UInt32? offsetLeft, UInt32? offsetRight)
         {
@@ -298,20 +297,14 @@ namespace QuackTwitter
             
             if (bannerPath != null)
             {
-                var task = FileSystem.Current.GetFileFromPathAsync(bannerPath);
-                task.Wait();
-                bannerFile = task.Result;
+                bannerStream = new FileStream(bannerPath, FileMode.Open);
             }
 
-            if (bannerFile != null)
+            if (bannerStream != null)
             {
-                var streamTask = bannerFile.OpenAsync(FileAccess.Read);
-                streamTask.Wait();
-                var stream = streamTask.Result;
-
-                BinaryReader reader = new BinaryReader(stream);
-                bannerData = new Byte[stream.Length];
-                reader.Read(bannerData, 0, (int)stream.Length);
+                BinaryReader reader = new BinaryReader(bannerStream);
+                bannerData = new Byte[bannerStream.Length];
+                reader.Read(bannerData, 0, (int)bannerStream.Length);
             }
 
             if (bannerData == null || bannerData.Length != 0)
@@ -334,12 +327,12 @@ namespace QuackTwitter
         }
 
         public void AccountUpdateProfileBanner(
-            Byte[] bannerData = null, IFile bannerFile = null, string bannerPath = null,
+            Byte[] bannerData = null, FileStream bannerStream = null, string bannerPath = null,
             UInt32? width = null, UInt32? height = null,
             UInt32? offsetLeft = null, UInt32? offsetRight = null)
         {
             var parameters = GenerateAccountUpdateProfileBannerParam(
-                bannerData, bannerFile, bannerPath,
+                bannerData, bannerStream, bannerPath,
                 width, height,
                 offsetLeft, offsetRight);
 
@@ -347,12 +340,12 @@ namespace QuackTwitter
         }
 
         async public Task AccountUpdateProfileBannerAsync(
-            Byte[] bannerData = null, IFile bannerFile = null, string bannerPath = null,
+            Byte[] bannerData = null, FileStream bannerStream = null, string bannerPath = null,
             UInt32? width = null, UInt32? height = null,
             UInt32? offsetLeft = null, UInt32? offsetRight = null)
         {
             var parameters = GenerateAccountUpdateProfileBannerParam(
-                bannerData, bannerFile, bannerPath,
+                bannerData, bannerStream, bannerPath,
                 width, height,
                 offsetLeft, offsetRight);
 

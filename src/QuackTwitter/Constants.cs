@@ -690,19 +690,10 @@ namespace QuackTwitter
     {
         public static string EnumValueMapToString(object enumval)
         {
-            MemberInfo member = null;
-            foreach(var temp in enumval.GetType().GetTypeInfo().DeclaredMembers)
+            MemberInfo[] members = enumval.GetType().GetMember(enumval.ToString());
+            if (members != null && members.Length > 0)
             {
-                if(temp.Name == enumval.ToString())
-                {
-                    member = temp;
-                    break;
-                }
-            }
-
-            if (member != null)
-            {
-                EnumValueAttribute attr = member.GetCustomAttribute<EnumValueAttribute>() as EnumValueAttribute;
+                EnumValueAttribute attr = members[0].GetCustomAttribute<EnumValueAttribute>() as EnumValueAttribute;
                 if (attr != null)
                 {
                     return attr.value;

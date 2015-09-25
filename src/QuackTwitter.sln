@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuackTest", "QuackTest\QuackTest.csproj", "{9546CE4F-BCD0-4872-AC04-0AA72114D080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuackTwitter", "QuackTwitter\QuackTwitter.csproj", "{65E6FEB8-320F-4806-A67B-0426B48D0B5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuackTwitter", "QuackTwitter\QuackTwitter.csproj", "{6BDB658C-0666-4067-822E-02F46287D9DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BDB658C-0666-4067-822E-02F46287D9DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BDB658C-0666-4067-822E-02F46287D9DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BDB658C-0666-4067-822E-02F46287D9DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BDB658C-0666-4067-822E-02F46287D9DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9546CE4F-BCD0-4872-AC04-0AA72114D080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9546CE4F-BCD0-4872-AC04-0AA72114D080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9546CE4F-BCD0-4872-AC04-0AA72114D080}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9546CE4F-BCD0-4872-AC04-0AA72114D080}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65E6FEB8-320F-4806-A67B-0426B48D0B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65E6FEB8-320F-4806-A67B-0426B48D0B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65E6FEB8-320F-4806-A67B-0426B48D0B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65E6FEB8-320F-4806-A67B-0426B48D0B5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
